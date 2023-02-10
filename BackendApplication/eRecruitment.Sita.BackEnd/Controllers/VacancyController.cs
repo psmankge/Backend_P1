@@ -1043,34 +1043,10 @@ namespace eRecruitment.Sita.BackEnd.Controllers
             return View(model);
         }
 
-
-        //==================PETER TRY AGAIN THIS METHOD ON 2023/13/01=================================================
-        //[HttpPost, ValidateInput(false)]
-        //[ValidateAntiForgeryToken]
-        //[HttpPost]
-        //public ActionResult AddLutJobSpecificQuestion(HttpPostedFileBase postedFile, HttpPostedFileBase postedBusinessCase, VacancyModels model, FormCollection fc, IEnumerable<HttpPostedFileBase> files)
+        //public JsonResult AddJobSpecQuest(JobJobSpecificQuestionModel objJobSpecificQuestionModel)
         //{
-
-        //    Session["sessAddQuestion"] = "Doski";
-        //    //AddVacancy(postedFile, postedBusinessCase, model, fc, files);
-
-        //    return null;
-
+        //    return Json( "", JsonRequestBehavior.AllowGet);
         //}
-        public JsonResult AddJobSpecQuest(JobJobSpecificQuestionModel objJobSpecificQuestionModel)
-        {
-
-            //if (!ModelState.IsValid)
-            //{
-            //    var errorList = (from item in ModelState
-            //                     where item.Value.ErrorMessage.ToList());
-            //    return Json(new { success = false, Message = "Some problem in validation", ErrorList = errorList });
-            //}
-            
-
-            return Json( "", JsonRequestBehavior.AllowGet);
-
-        }
 
 
 
