@@ -118,6 +118,7 @@
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label>BPS Vacancy Number:<span class="required" style="color:red;"> * </span></label>
+                                    @Html.Hidden("myBPSVacancyNo", Url.Action("checkVacancyBPSNumber"))
                                     @Html.TextAreaFor(Model => Model.BPSVacancyNo, new
                                {@*@id="BPSNum",*@@class = "form-control",
 placeholder = "BPS Number",

@@ -1187,12 +1187,12 @@ namespace eRecruitment.Sita.BackEnd.Controllers
 
 
 
-            if (Convert.ToDateTime(item.ClosingDate) <= DateTime.Now)
-            {
-                ModelState.AddModelError("", "Closing date cannot be less or equals to Today's Date");
-                TempData["Warning"] = "Closing date cannot be less or equals to Today's Date";
-                return RedirectToAction("VacancyList", new { id = userid });
-            }
+            //if (Convert.ToDateTime(item.ClosingDate) <= DateTime.Now)
+            //{
+            //    ModelState.AddModelError("", "Closing date cannot be less or equals to Today's Date");
+            //    TempData["Warning"] = "Closing date cannot be less or equals to Today's Date";
+            //    return RedirectToAction("VacancyList", new { id = userid });
+            //}
 
             ViewBag.ClosingDate = item.ClosingDate;
 
@@ -1222,11 +1222,11 @@ namespace eRecruitment.Sita.BackEnd.Controllers
             ViewBag.Race = _dal.GetRaceList();
             ViewBag.SalaryType = _dal.GetSalaryTypeList();
             ViewBag.RecruiterList = _dal.GetListOfRecruiters();
-
-            if (VacancyQuestionID == null)
-            {
-                ModelState.AddModelError(" ", "Please select at least one vacancy question");
-            }
+           
+            //if (VacancyQuestionID == null)
+            //{
+            //    ModelState.AddModelError(" ", "Please select at least one vacancy question");
+            //}
 
             if (ModelState.IsValid)
             {

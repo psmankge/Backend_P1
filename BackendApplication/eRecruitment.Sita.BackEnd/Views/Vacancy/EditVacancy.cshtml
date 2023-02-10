@@ -78,7 +78,9 @@
                                     <div class="form-group">
                                         <div class="col-md-12">
                                             <label>BPS Vacancy Number:<span class="required" style="color:red;"> * </span></label>
-                                            @Html.TextAreaFor(Model => @item.BPSVacancyNo, new { @class = "form-control", placeholder = "XXX99999,XXX88888", tabindex = 10 })
+                                            @Html.Hidden("myBPSVacancyNo", Url.Action("checkVacancyBPSNumber"))
+                                            @Html.TextAreaFor(Model => @item.BPSVacancyNo, new { @id = "BPSVacancyNo", @class = "form-control", placeholder = "XXX99999,XXX88888", tabindex = 10 })
+
                                         </div>
                                     </div>
                                 </div>
@@ -234,7 +236,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <label>Employment Type:<span class="required" style="color:red;"> * </span></label>
-                                                @Html.DropDownListFor(Model => @item.EmploymentTypeID, new SelectList(ViewBag.EmploymentType, "EmploymentTypeID", "EmploymentType", @item.EmploymentTypeID), "--Select Employment Type--", new { @class = "form-control", onchange = "CheckEmployment()", id = "EmploymentTypeID", required = "Required", tabindex = 9 })
+                                                @Html.DropDownListFor(Model => @item.EmploymentTypeID, new SelectList(ViewBag.EmploymentType, "EmploymentTypeID", "EmploymentType", @item.EmploymentTypeID), "--Select Employment Type--", new { @class = "form-control", onchange = "CheckEmploymentEdit()", id = "EmploymentTypeID", required = "Required", tabindex = 9 })
                                             </div>
                                         </div>
                                     </div>
@@ -317,24 +319,24 @@
                                     </div>
 
                                     @*<div class="form-group">
-            <div class="col-md-12">
-                <label>Skill Category:<span class="required" style="color:red;"> * </span></label>
-                @Html.DropDownListFor(Model => @item.CategoryID, new SelectList(ViewBag.SkillsCategoryList, "CategoryID", "Description", @item.CategoryID), "--Select Skill Category --", new { id = "CategoryID", @class = "form-control", required = "Required", tabindex = 1, onChange = "GetSkillPerCatergoryForEdit()" })
-            </div>
-        </div>
+                                        <div class="col-md-12">
+                                            <label>Skill Category:<span class="required" style="color:red;"> * </span></label>
+                                            @Html.DropDownListFor(Model => @item.CategoryID, new SelectList(ViewBag.SkillsCategoryList, "CategoryID", "Description", @item.CategoryID), "--Select Skill Category --", new { id = "CategoryID", @class = "form-control", required = "Required", tabindex = 1, onChange = "GetSkillPerCatergoryForEdit()" })
+                                        </div>
+                                    </div>
 
-        <div class="col-md-12">
-            <div class="box box-warning">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Skills<span class="required" style="color:red;"> * </span></h3>
-                </div>
-                <!-- /.box-header -->
-                <div class="box-body" id="Skill">
+                                    <div class="col-md-12">
+                                        <div class="box box-warning">
+                                            <div class="box-header with-border">
+                                                <h3 class="box-title">Skills<span class="required" style="color:red;"> * </span></h3>
+                                            </div>
+                                            <!-- /.box-header -->
+                                            <div class="box-body" id="Skill">
 
-                </div>
-                <!-- /.box-body -->
-            </div>
-        </div>*@
+                                            </div>
+                                            <!-- /.box-body -->
+                                        </div>
+                                    </div>*@
 
                                     <div class="form-group">
                                         <div class="col-md-12">
@@ -426,16 +428,16 @@
 
 
                                     @*<div class="col-md-12">
-            <label>Attach Business Case:</label>
-            <input type="file" class="form-control-file" accept="image/gif, image/jpeg, application/pdf" name="postedBusinessCase" id="postedFile" />
-        </div>
+                                        <label>Attach Business Case:</label>
+                                        <input type="file" class="form-control-file" accept="image/gif, image/jpeg, application/pdf" name="postedBusinessCase" id="postedFile" />
+                                    </div>
 
-        <div class="clearfix"></div><br />
+                                    <div class="clearfix"></div><br />
 
-        <div class="col-md-12">
-            <label>Attach Requisition:</label>
-            <input type="file" class="form-control-file" accept="image/gif, image/jpeg, application/pdf" name="postedFile" id="postedFile" />
-        </div>*@
+                                    <div class="col-md-12">
+                                        <label>Attach Requisition:</label>
+                                        <input type="file" class="form-control-file" accept="image/gif, image/jpeg, application/pdf" name="postedFile" id="postedFile" />
+                                    </div>*@
 
                                     <label>Attach File/s:<span class="required" style="color:red;">  </span></label>
                                     <div class="form-group" id="uploadtemplate">
@@ -569,7 +571,7 @@
                                                         <h3 class="box-title">Qualification<span class="required" style="color:red;"> * </span></h3>
                                                     </div>
                                                     <!-- /.box-header -->
-                                                    <div class="box-body">
+                                                    <div class="box-body-qualification">
                                                         @{
                                                             int vid = @item.ID;
                                                             var data = _db.tblVacancyQuestions.Where(p => p.VacancyID == vid).Select(x => x.QuestionID).ToList();
@@ -617,7 +619,7 @@
                                                         <h3 class="box-title">Experience<span class="required" style="color:red;"> * </span></h3>
                                                     </div>
                                                     <!-- /.box-header -->
-                                                    <div class="box-body">
+                                                    <div class="box-body-experience">
                                                         @{
                                                             int vidE = @item.ID;
                                                             var dataE = _db.tblVacancyQuestions.Where(p => p.VacancyID == vidE).Select(x => x.QuestionID).ToList();
@@ -665,7 +667,7 @@
                                                         <h3 class="box-title">Certification<span class="required" style="color:red;"> * </span></h3>
                                                     </div>
                                                     <!-- /.box-header -->
-                                                    <div class="box-body">
+                                                    <div class="box-body-certification">
                                                         @{
                                                             int vidC = @item.ID;
                                                             var dataC = _db.tblVacancyQuestions.Where(p => p.VacancyID == vidC).Select(x => x.QuestionID).ToList();
@@ -713,7 +715,7 @@
                                                         <h3 class="box-title">Current Annual Salary<span class="required" style="color:red;"> * </span></h3>
                                                     </div>
                                                     <!-- /.box-header -->
-                                                    <div class="box-body">
+                                                    <div class="box-body-annaul-salary">
                                                         @{
                                                             int vidAS = @item.ID;
                                                             var dataAS = _db.tblVacancyQuestions.Where(p => p.VacancyID == vidAS).Select(x => x.QuestionID).ToList();
@@ -760,7 +762,7 @@
                                                     <h3 class="box-title">Notice Period<span class="required" style="color:red;"> * </span></h3>
                                                 </div>
                                                 <!-- /.box-header -->
-                                                <div class="box-body">
+                                                <div class="box-body-notice-period">
                                                     @{
                                                         int vidNP = @item.ID;
                                                         var dataNP = _db.tblVacancyQuestions.Where(p => p.VacancyID == vidNP).Select(x => x.QuestionID).ToList();
@@ -801,7 +803,7 @@
 
                                     <div class="clearfix"></div><br />
                                     <div class="col-md-12 pull-right">
-                                        <input type="submit" onclick="checkBPS(event)" class="btn btn-success" value="Save" /> |
+                                        <input type="submit" onclick="customValidation(event)" class="btn btn-success" value="Save" /> |
                                         <a href="@Url.Action("VacancyList", "Vacancy")" onclick="return confirm('Are you sure you want to cancel?')" type="button" class="btn btn-danger">
                                             Cancel
                                         </a>
@@ -820,6 +822,28 @@
             <!-- /.box-footer-->
         </div>
         <!-- /.box -->
+
+        <div class="modal fade" id="myModal">
+            <div class="modal-dialog">
+                <div id="mainContent" class="modal-content col-sm-12">
+                    <div id="myModalContent"></div>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Message</h4>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+
+                        <button class="btn btn-danger btn-sm" data-dismiss="modal">Ok</button>
+                        @*@Html.ActionLink("Cancel", "ViewForApproval", new { id = User.Identity.GetUserId(), msg = "CANCEL" }, new { @class = "btn btn-primary btn-sm" })*@
+                        @*<input class="btn btn-primary" type="submit" value="Submit" />*@
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </section>
     <!-- /.content -->
 </div>

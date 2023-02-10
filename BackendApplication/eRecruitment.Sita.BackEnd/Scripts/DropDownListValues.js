@@ -179,6 +179,8 @@ function GetDepartmentForEdit() {
 
 
     var myUrl = $("#myDepartment").val();
+    
+   
     $.ajax({
         type: "POST",
         url: myUrl,
@@ -960,6 +962,21 @@ function CheckEmployment() {
     }
 }
 
+function CheckEmploymentEdit() {
+
+
+    var d = $("#EmploymentTypeID").val();
+    if (d == 1 || d == 3 || d == 4 || d == 5) {
+        $("#ContractDuration").show();
+
+    }
+    else {
+        document.getElementById("ContractDuration").innerHTML = "";
+        $("#ContractDuration").hide();
+    }
+}
+
+
 
 function GetVacancyID(d) {
     document.getElementById("hdnVacancyID").value = d;
@@ -1254,11 +1271,12 @@ function checkBPS(event) {
  * By khutso
  * */
 function checkVacancyBPSNumber() {
+    
 
     var VBPSNumber = $("#BPSVacancyNo").val();
     var BPSNumberExixt = false;
 
-    var baseUrl = "checkVacancyBPSNumber";
+    var baseUrl = $("#myBPSVacancyNo").val();;
     $.ajax({
         type: "POST",
         url: baseUrl,
@@ -1297,6 +1315,8 @@ function generalCheckBoxValidation(checkbox) {
  * By khutso
  * */
 function customValidation(event) {
+
+    
     var validateBPSNumber = checkVacancyBPSNumber();
     //call question bank validation
     var validQualification = generalCheckBoxValidation('box-body-qualification');
@@ -1326,9 +1346,16 @@ function customValidation(event) {
     //================Peter 20230119=======================
     var JobSepecificQuest = $("#JobSpecQuestions").val();
     //=====================================================
+    
+    var controllerAction = window.location.pathname.split('/');
 
+    if (controllerAction[2] === "EditVacancy") {
+
+         validateBPSNumber = false;
+    }
     if (validateBPSNumber) {
         // prevent the form submit
+        event.preventDefault();
         //display the error message
         mymodal.find('.modal-body').text('BPS Vacany Number already Exist');
         mymodal.modal('show');
@@ -1449,10 +1476,18 @@ function customValidation(event) {
 
     //========================================Peter - new code, specific field================================================20221017
     else if ($("#file1").val() === "") {
-        event.preventDefault();//prevent the form submit
-        mymodal.find('.modal-body').text('Attachment cannot be empty, please make sure all required fields that are marked with red asterik are not empty');
-        mymodal.modal('show');
-        $("#file1").focus();
+
+        
+        if (!(controllerAction[2] === "EditVacancy")) {
+
+            event.preventDefault();//prevent the form submit
+            mymodal.find('.modal-body').text('Attachment cannot be empty, please make sure all required fields that are marked with red asterik are not empty');
+            mymodal.modal('show');
+            $("#file1").focus();
+
+        }
+
+       
     }
     //========================================================================================================================
     //========================================Peter - new code, specific field================================================20221017
