@@ -911,18 +911,18 @@ namespace eRecruitment.Sita.BackEnd.Controllers
             {
 
                 //=========================Peter - 20230112========================
-                if (button.ToLower() == "add")
-                {
-                    if (model.JobSpecificQuestions != null)
-                    {
-                        _dal.InsertUpdateLutJobSpecificQuestion((int)model.JobTitleID, model.JobSpecificQuestions, DateTime.Now, User.Identity.GetUserId(), null, null);
-                        return View(model);
-                    }
-                }
-                else if (button.ToLower() == "save")
-                {
-                    //code
-                }
+                //if (button.ToLower() == "add")
+                //{
+                //    if (model.JobSpecificQuestions != null)
+                //    {
+                //        _dal.InsertUpdateLutJobSpecificQuestion((int)model.JobTitleID, model.JobSpecificQuestions, DateTime.Now, User.Identity.GetUserId(), null, null);
+                //        return View(model);
+                //    }
+                //}
+                //else if (button.ToLower() == "save")
+                //{
+                //    //code
+                //}
                 //=================================================================
 
 
