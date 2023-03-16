@@ -4075,7 +4075,7 @@ namespace eRecruitment.BusinessDomain.DAL
         {
             var p = new List<GenderModel>();
             _db = new eRecruitmentDataClassesDataContext();
-            var Gender = _db.lutGenders.Where(x => x.GenderID != -1).ToList();
+            var Gender = _db.lutGenders.Where(x => x.GenderID != -1).OrderBy(x=> x.Gender).ToList();
 
             foreach (var d in Gender)
             {
