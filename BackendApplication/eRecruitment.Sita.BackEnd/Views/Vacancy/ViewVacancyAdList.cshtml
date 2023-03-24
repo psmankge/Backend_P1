@@ -1,9 +1,14 @@
 ﻿@using System.Data.Linq
 @using Microsoft.AspNet.Identity
+
 @{
     @model eRecruitment.BusinessDomain.DAL.Entities.AppModels.VacancyListModels
 
+    eRecruitment.Sita.BackEnd.App_Data.Entities.DAL.eRecruitmentDataClassesDataContext _db =
+    new eRecruitment.Sita.BackEnd.App_Data.Entities.DAL.eRecruitmentDataClassesDataContext();
+
 }
+
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -22,12 +27,24 @@
         <div class="box-body">
             <div class="box">
                 <div class="box-header with-border">
-                    <div class="pull-left">
-                        <a href="@Url.Action("AddVacancyProfile", "Admin")" class="btn btn-primary btn-sm">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                            Create Job Profile
-                        </a>
-                    </div>
+
+                    @*====Peter - hiden the Create Job Profile button for 3 roles (Recruiter Admin, Recruiter and Approver): 20230324 ====*@
+                    @if (Request.IsAuthenticated && User.IsInRole("Recruiter") || Request.IsAuthenticated && User.IsInRole("Approver")
+                        || Request.IsAuthenticated && User.IsInRole("Recruiter Admin"))
+                    {
+                        //Hide button
+                    }
+                    else
+                    {
+                        <div class="pull-left">
+                            <a href="@Url.Action("AddVacancyProfile", "Admin")" class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                Create Job Profile
+                            </a>
+                        </div>
+                    }
+                    @*===================================================================================================================*@
+
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
                                 title="Collapse">
@@ -38,7 +55,7 @@
                         </button>
                     </div>
                 </div>
-               
+
                 <div class="box-body">
                     <div class="box">
                         <div class="box-body">
@@ -67,26 +84,26 @@
                                     {
                                         foreach (var item in ViewBag.VacancyList)
                                         {
-                                    <tr>
-                                        <td>@item.BPSVacancyNo</td>  @*new - Peter Added this on 20220907*@
+                                            <tr>
+                                                <td>@item.BPSVacancyNo</td>  @*new - Peter Added this on 20220907*@
 
-                                        <td>@item.ReferenceNo</td>
+                                                <td>@item.ReferenceNo</td>
 
-                                        <td>@item.Recruiter</td>   @*new - Peter Added this on 20220907*@
+                                                <td>@item.Recruiter</td>   @*new - Peter Added this on 20220907*@
 
-                                        <td>@item.JobTitle</td>
-                                        <td>@item.Organisation</td>
-                                        <td>@item.EmploymentType</td>
-                                        <td>@item.Status</td>
-                                        <td>@item.CreatedDate</td>
-                                        <td>@item.ClosingDate</td>
-                                        <td>
-                                            <a href="@Url.Action("ViewVacancy", "Vacancy", new { id = @item.ID})"><span class="fa fa-send success" style="color:green"></span> View</a>
-                                        </td>
-                                        <td>
-                                            <a href="@Url.Action("DownloadVacancyAd", "Vacancy", new { id = @item.ID})"><span class="fa fa-download success" style="color:green"></span> Download</a>
-                                        </td>
-                                    </tr>
+                                                <td>@item.JobTitle</td>
+                                                <td>@item.Organisation</td>
+                                                <td>@item.EmploymentType</td>
+                                                <td>@item.Status</td>
+                                                <td>@item.CreatedDate</td>
+                                                <td>@item.ClosingDate</td>
+                                                <td>
+                                                    <a href="@Url.Action("ViewVacancy", "Vacancy", new { id = @item.ID})"><span class="fa fa-send success" style="color:green"></span> View</a>
+                                                </td>
+                                                <td>
+                                                    <a href="@Url.Action("DownloadVacancyAd", "Vacancy", new { id = @item.ID})"><span class="fa fa-download success" style="color:green"></span> Download</a>
+                                                </td>
+                                            </tr>
                                         }
                                     }
 
@@ -95,12 +112,12 @@
                             </table>
 
                         </div>
-       
+
                     </div>
                 </div>
 
                 <div class="box-footer">
-   
+
                 </div>
 
             </div>

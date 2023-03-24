@@ -2310,7 +2310,9 @@ namespace eRecruitment.Sita.BackEnd.Controllers
             int professioonallyRegisteredID = fc["professioonallyRegistered"] != null ? 1 : 0;
             int previouslyEmployedPSID = fc["previouslyEmployedPS"] != null ? 1 : 0;
             int attachedCV = fc["chkWithAttachedCV"] != null ? 1 : 0;
-            int attachedID = fc["chkWithAttachedID"] != null ? 1 : 0;
+            //================== Removed as per client request -Peter 20230324 ====================
+            //int attachedID = fc["chkWithAttachedID"] != null ? 1 : 0;
+            //=====================================================================================
             int withDisabilities = fc["chkWithDisabilities"] != null ? 1 : 0;
             int matricCompleted = fc["chkMatricCompleted"] != null ? 1 : 0;
             int driversLicence = fc["chkDriversLicence"] != null ? 1 : 0;
@@ -2346,9 +2348,18 @@ namespace eRecruitment.Sita.BackEnd.Controllers
             DataTable dt = new DataTable();
             string vQuestions = string.Empty;
 
+            //================== Removed as per client request -Peter 20230324 ====================
+
+            //dt = _dal.GeteRecruitmentScreenedCandidateList(vacancyID
+            //, provinceID, genderID
+            //        , raceID, withDisabilities, attachedCV, attachedID, ageRange
+            //        , VacancyQuestionBank, professioonallyRegisteredID, previouslyEmployedPSID, matricCompleted, driversLicence);
+
             dt = _dal.GeteRecruitmentScreenedCandidateList(vacancyID, provinceID, genderID
-                    , raceID, withDisabilities, attachedCV, attachedID, ageRange
+                    , raceID, withDisabilities, attachedCV, ageRange
                     , VacancyQuestionBank, professioonallyRegisteredID, previouslyEmployedPSID, matricCompleted, driversLicence);
+
+            //=====================================================================================
 
             vQuestions = _dal.GetKillerQuestionByVIDQBanks(Convert.ToInt32(vacancyID), VacancyQuestionBank);
 
@@ -2493,18 +2504,19 @@ namespace eRecruitment.Sita.BackEnd.Controllers
                     break;
             }
 
-            switch (attachedID)
-            {
-                case 0:
-                    AttachedID = "Not Applicable";
-                    break;
-                case 1:
-                    AttachedID = "Yes";
-                    break;
-                default:
-                    break;
-            }
-
+            //================== Removed as per client request -Peter 20230324 ====================
+            //switch (attachedID)
+            //{
+            //    case 0:
+            //        AttachedID = "Not Applicable";
+            //        break;
+            //    case 1:
+            //        AttachedID = "Yes";
+            //        break;
+            //    default:
+            //        break;
+            //}
+            //=====================================================================================
 
             switch (withDisabilities)
             {
