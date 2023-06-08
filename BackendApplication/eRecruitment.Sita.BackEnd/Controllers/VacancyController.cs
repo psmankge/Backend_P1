@@ -910,21 +910,6 @@ namespace eRecruitment.Sita.BackEnd.Controllers
             if (ModelState.IsValid)
             {
 
-                //=========================Peter - 20230112========================
-                //if (button.ToLower() == "add")
-                //{
-                //    if (model.JobSpecificQuestions != null)
-                //    {
-                //        _dal.InsertUpdateLutJobSpecificQuestion((int)model.JobTitleID, model.JobSpecificQuestions, DateTime.Now, User.Identity.GetUserId(), null, null);
-                //        return View(model);
-                //    }
-                //}
-                //else if (button.ToLower() == "save")
-                //{
-                //    //code
-                //}
-                //=================================================================
-
 
                 string DeligationReasons = string.Empty;
                 string AdditonalRequirements = string.Empty;
@@ -1042,28 +1027,6 @@ namespace eRecruitment.Sita.BackEnd.Controllers
             }
             return View(model);
         }
-
-        //public JsonResult AddJobSpecQuest(JobJobSpecificQuestionModel objJobSpecificQuestionModel)
-        //{
-        //    return Json( "", JsonRequestBehavior.AllowGet);
-        //}
-
-
-
-        //=========================================================TRY THIS - END ========================================================
-
-        //============Peter - Add Job Specific Question 20231101============================
-        //public ActionResult AddLutJobSpecificQuestion(HttpPostedFileBase postedFile, HttpPostedFileBase postedBusinessCase, VacancyModels model, FormCollection fc, IEnumerable<HttpPostedFileBase> files)
-        //{
-
-        //    if (model.JobSpecificQuestions != null)
-        //    {
-        //        _dal.InsertUpdateLutJobSpecificQuestion((int)model.JobTitleID, model.JobSpecificQuestions, DateTime.Now, User.Identity.GetUserId(), null, null);
-
-        //    }
-        //    return View(model);
-        //}
-        //===================================================================================
 
         //Edit Vacancy 
         [Authorize]
