@@ -79,6 +79,8 @@
                                         <div class="col-md-12">
                                             <label>BPS Vacancy Number:<span class="required" style="color:red;"> * </span></label>
                                             @Html.Hidden("myBPSVacancyNo", Url.Action("checkVacancyBPSNumber"))
+                                        <input type="hidden" value="EditVacancy" id="myBPSVacancyNoHidden" />
+                                            
                                             @Html.TextAreaFor(Model => @item.BPSVacancyNo, new { @id = "BPSVacancyNo", @class = "form-control", placeholder = "XXX99999,XXX88888", tabindex = 10 })
 
                                         </div>

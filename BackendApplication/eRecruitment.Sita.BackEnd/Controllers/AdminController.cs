@@ -205,9 +205,11 @@ namespace eRecruitment.Sita.BackEnd.Controllers
         public ActionResult ManageAssignedRole(string id)
         {
             List<UserListModel> data = _dal.GetUserForAssignUseraRole(id);
+            List<UserProvinceListModel> province_data;
             int OrganisationID = _db.AspNetUserRoles.Where(x => x.UserId == id).Select(x => x.OrganisationID).FirstOrDefault();
             ViewBag.Organisation = _dal.GetOrganisationList();
             ViewBag.Division = _dal.GetDivisionListUsingOrganisationID(OrganisationID);
+            ViewBag.Province = _dal.GetProvinceList();
             if (data.Count() > 0 && data[0].SelectedDivisions != null)
             {
                 if (data[0].SelectedDivisions.Count() > 0)
@@ -255,7 +257,9 @@ namespace eRecruitment.Sita.BackEnd.Controllers
                     //else
                     //{
                         _dal.AssignRole(id, roleID, OrganisationID);
-                        _dal.AssignDivisionDepartment(id, OrganisationID, DivisionID, DepartmentID);
+
+                      _dal.AssignDivisionDepartment(id, OrganisationID, DivisionID, DepartmentID);
+                        
 
                         string UserDetails = _db.tblProfiles.Where(s => s.UserID == id).Select(f => f.FirstName + " " + f.Surname + ", ID Number :" + f.IDNumber).FirstOrDefault();
 

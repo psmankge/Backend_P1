@@ -1,12 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\BackendApplication",
-    "\\BackendApplication\\eRecruitment.Sita.BackEnd",
-    "\\BackendApplication\\eRecruitment.Sita.BackEnd\\Views",
-    "\\BackendApplication\\eRecruitment.Sita.BackEnd\\Views\\Vacancy",
-    "\\eRecruitmentObjects"
+    ""
   ],
-  "SelectedNode": "\\BackendApplication\\eRecruitment.Sita.BackEnd\\Views\\Vacancy\\EditVacancy.cshtml",
+  "SelectedNode": "\\eRecruitment.Sita.BackEnd.sln",
   "PreviewInSolutionExplorer": false
 }

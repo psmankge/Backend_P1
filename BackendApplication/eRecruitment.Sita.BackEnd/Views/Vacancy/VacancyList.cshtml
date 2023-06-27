@@ -123,7 +123,9 @@
                                                             string bad = string.Empty;
                                                     <ul class="dropdown-menu" role="menu">
                                                         <li><a href="#myModal2" data-toggle="modal" id="@item.ID" data-id="@item.ID" onclick="GetVacancyIDForRetract(@item.ID)" data-target="#myModal2"><span class="fa fa-exchange" style="color:lightcoral"></span>Retract</a></li>
-                                                        <li><a href="@Url.Action("ExtendVacancyClosingDate", "Vacancy", new { id = @item.ID })"><span class="ace-icon glyphicon glyphicon-plus" style="color:lightcoral"></span> Extend </a></li>
+                                                        <li><a href="@Url.Action("ExtendVacancyClosingDate", "Vacancy", new { id = @item.ID })"><span class="ace-icon glyphicon glyphicon-plus" style="color:lightcoral"></span> Extend </a>
+                                                        <li><a href="@Url.Action("ReAdvertiseVacancy", "Vacancy", new { id = @item.ID})"><span class="ace-icon glyphicon glyphicon-plus" style="color:lightcoral"></span> Re Advertise</a></li>
+
 
                                                     </ul>
                                                             

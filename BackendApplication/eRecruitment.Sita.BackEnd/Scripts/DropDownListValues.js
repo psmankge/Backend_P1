@@ -1267,6 +1267,9 @@ function checkBPS(event) {
 
 
 }
+
+
+
 /**
  * By khutso
  * */
@@ -1276,7 +1279,7 @@ function checkVacancyBPSNumber() {
     var VBPSNumber = $("#BPSVacancyNo").val();
     var BPSNumberExixt = false;
 
-    var baseUrl = $("#myBPSVacancyNo").val();;
+    var baseUrl = $("#myBPSVacancyNo").val();
     $.ajax({
         type: "POST",
         url: baseUrl,
@@ -1291,7 +1294,7 @@ function checkVacancyBPSNumber() {
             }
         },
         error: function (xhr, ajaxOptions, thrownError) {
-
+             
             alert("Error :Please contact system administrator ");
         }
     });
@@ -1316,7 +1319,7 @@ function generalCheckBoxValidation(checkbox) {
  * */
 function customValidation(event) {
 
-    
+    debugger;
     var validateBPSNumber = checkVacancyBPSNumber();
     //call question bank validation
     var validQualification = generalCheckBoxValidation('box-body-qualification');
@@ -1347,12 +1350,18 @@ function customValidation(event) {
     var JobSepecificQuest = $("#JobSpecQuestions").val();
     //=====================================================
     
-    var controllerAction = window.location.pathname.split('/');
-
-    if (controllerAction[2] === "EditVacancy") {
+    
+    if ($("#myBPSVacancyNoHidden").val() == "EditVacancy" || $("#ReAdvertiseVacancy").val() == "ReAdvertiseVacancy") {
 
          validateBPSNumber = false;
     }
+ 
+
+    //if ($("#ReAdvertiseVacancy").val() == "ReAdvertiseVacancy") {
+
+    //    validateBPSNumber = false;
+    //}
+    
     if (validateBPSNumber) {
         // prevent the form submit
         event.preventDefault();
@@ -1478,7 +1487,7 @@ function customValidation(event) {
     else if ($("#file1").val() === "") {
 
         
-        if (!(controllerAction[2] === "EditVacancy")) {
+        if (!(controllerAction.includes('EditVacancy') || controllerAction.includes('ReAdvertiseVacancy')) ) {
 
             event.preventDefault();//prevent the form submit
             mymodal.find('.modal-body').text('Attachment cannot be empty, please make sure all required fields that are marked with red asterik are not empty');
@@ -1487,8 +1496,12 @@ function customValidation(event) {
 
         }
 
-       
+
+       validateBPSNumber = false;
     }
+
+       
+    
     //========================================================================================================================
     //========================================Peter - new code, specific field================================================20221017
     else if ($("#ApproverUserId").val() === "") {

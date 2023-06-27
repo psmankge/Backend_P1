@@ -97,6 +97,15 @@ namespace eRecruitment.BusinessDomain.DAL.Entities.AppModels
         public string OrganisationName { get; set; }
     }
 
+    public class ProvinceModel
+    {
+        [Key]
+        public int ProvinceID { get; set; }
+        public string ProvinceDiscription { get; set; }
+        public int OrganisationID { get; set; }
+        public string OrganisationName { get; set; }
+    }
+
     public class DisabilityModel
     {
         [Key]
@@ -564,6 +573,9 @@ namespace eRecruitment.BusinessDomain.DAL.Entities.AppModels
         //================Peter 20231101===========================
         public string JobSpecificQuestions { get; set; }
         //=========================================================
+
+        public int VacancyReAdvertiseNO { get; set; }
+
     }
 
     public class VacancyListModels

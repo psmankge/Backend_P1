@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="eRecruitmentDb" Class="eRecruitmentDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=MERA00412\SQLEXPRESS2019;Initial Catalog=eRecruitmentDb;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DefaultConnection" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=MERA00411;Initial Catalog=eRecruitmentDB;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DefaultConnection" Provider="System.Data.SqlClient" />
   <Table Name="dbo.[__MigrationHistory]" Member="__MigrationHistories">
     <Type Name="__MigrationHistory">
       <Column Name="MigrationId" Type="System.String" DbType="NVarChar(150) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -1062,6 +1062,33 @@
       <Column Name="ModifiedBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="" Member="ErrorLogs">
+    <Type Name="ErrorLog">
+      <Column Name="ID" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Function_Name" Type="System.String" CanBeNull="false" />
+      <Column Name="DateSubmitted" Type="System.DateTime" CanBeNull="false" />
+      <Column Name="Message" Type="System.String" CanBeNull="false" />
+      <Column Name="IS_API" Type="System.Boolean" CanBeNull="false" />
+      <Column Name="Application_Type" Type="System.String" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="" Member="tblAssignedPerProvinces">
+    <Type Name="tblAssignedPerProvince">
+      <Column Name="AssignedPerProvinceID" AutoSync="Never" Type="System.Int32" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="RecruiterID" Type="System.String" CanBeNull="false" />
+      <Column Name="OrganisationID" Type="System.Int32" CanBeNull="false" />
+      <Column Name="ProvinceID" Type="System.Int32" CanBeNull="false" />
+      <Column Name="CreatedOn" Type="System.DateTime" CanBeNull="false" />
+      <Column Name="CreatedBy" Type="System.Guid" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="" Member="tblVacancyReAdvertises">
+    <Type Name="tblVacancyReAdvertise">
+      <Column Name="ReAdvertiseID" Type="System.Guid" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="BPSNumber" Type="System.String" CanBeNull="false" />
+      <Column Name="VacancyID" Type="System.Int32" CanBeNull="false" />
+    </Type>
+  </Table>
   <Function Name="dbo.proc_eRecruitmentInsertUserRole" Method="proc_eRecruitmentInsertUserRole">
     <Parameter Name="UserId" Parameter="userId" Type="System.String" DbType="NVarChar(128)" />
     <Parameter Name="RoleId" Parameter="roleId" Type="System.Int32" DbType="Int" />
@@ -2077,12 +2104,13 @@
       <Column Name="StatusID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
-  <Function Name="dbo.proc_eRecruitmentInsertUpdateLutJobSpecificQuestion" Method="proc_eRecruitmentInsertUpdateLutJobSpecificQuestion">
+  <Function Name="dbo.proc_eRecruitmentInsertUpdateLutJobSpecificQuestion" Method="proc_eRecruitmentInsertUpdateLutJobSpecificQuestion" IsComposable="true">
     <Parameter Name="JobTitleID" Parameter="jobTitleID" Type="System.Int32" DbType="Int" />
     <Parameter Name="JobSpecificeQuestionDesc" Parameter="jobSpecificeQuestionDesc" Type="System.String" DbType="VarChar(500)" />
     <Parameter Name="CreatedDate" Parameter="createdDate" Type="System.DateTime" DbType="DateTime" />
     <Parameter Name="CreatedBy" Parameter="createdBy" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="ModifyDate" Parameter="modifyDate" Type="System.DateTime" DbType="DateTime" />
     <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="object" />
   </Function>
 </Database>

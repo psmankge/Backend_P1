@@ -15,7 +15,12 @@ namespace eRecruitment.BusinessDomain.DAL
 {
     public class DataAccess
     {
-        eRecruitmentDataClassesDataContext _db = new eRecruitmentDataClassesDataContext();
+       private  eRecruitmentDataClassesDataContext _db;
+
+        public DataAccess(){
+
+            _db = new eRecruitmentDataClassesDataContext();
+        }
 
         public List<UserListModel> GetAllUserList(int UserOrganizationID, string emailAddress)
         {
@@ -144,7 +149,61 @@ namespace eRecruitment.BusinessDomain.DAL
                 return p;
             }
         }
+        public List<UserProvinceListModel> GetUserForAssignedProvince(string id)
+        {
 
+         
+            var p = new List<UserProvinceListModel>();
+            using (eRecruitmentDataClassesDataContext _db = new eRecruitmentDataClassesDataContext())
+            {
+
+                var OrganisationID = (from O in _db.AspNetUserRoles where O.UserId == id        select new {OrganisationID = O.OrganisationID }).FirstOrDefault();
+                var data = (from a in _db.AspNetUsers
+                            join b in _db.tblProfiles on a.Id equals b.UserID
+                            join c in _db.AspNetUserRoles on a.Id equals c.UserId
+                            join h in _db.AspNetRoles on c.RoleId equals h.Id
+                            //from d in dep.DefaultIfEmpty()
+                            where a.Id == id
+                            select new
+                            {
+                                UserID = a.Id,
+                                RoleName = h.Name,
+                                RoleID = h.Id,
+                                Email = a.Email,
+                                Surname = b.Surname,
+                                FirstName = b.FirstName,
+                                CellNo = b.CellNo,
+                                OrganisationID = c.OrganisationID
+
+                            }).FirstOrDefault();
+
+                var selected = (from a in _db.tblAssignedPerProvinces
+
+                                    //from d in dep.DefaultIfEmpty()
+                                where a.RecruiterID == id
+                                select new
+                                {
+
+                                    ProvinceID = a.ProvinceID
+
+
+                                }).ToArray();
+                if (data != null)
+                {
+
+
+                    UserProvinceListModel e = new UserProvinceListModel
+                    {
+                        UserID = Convert.ToString(data.UserID),
+                        OrganisationID = Convert.ToString(data.OrganisationID),
+                        SelectedProvinces = selected
+                    };
+                    p.Add(e);
+                }
+
+                return p;
+            }
+        }
         public List<DivisionModel> GetDivisionListUsingOrganisationID(int id)
         {
             var p = new List<DivisionModel>();
@@ -159,6 +218,25 @@ namespace eRecruitment.BusinessDomain.DAL
                 DivisionModel e = new DivisionModel();
                 e.DivisionID = Convert.ToInt32(d.DivisionID);
                 e.DivisionDiscription = Convert.ToString(d.DivisionDiscription);
+                //e.OrganisationName = Convert.ToString(d.OrganisationID);
+                p.Add(e);
+            }
+            return p;
+        }
+        public List<ProvinceModel> GetProvince()
+        {
+            var p = new List<ProvinceModel>();
+            _db = new eRecruitmentDataClassesDataContext();
+
+
+            var data = _db.lutProvinces;
+
+
+            foreach (var d in data)
+            {
+                ProvinceModel e = new ProvinceModel();
+                e.ProvinceID = Convert.ToInt32(d.ProvinceID);
+                e.ProvinceDiscription = Convert.ToString(d.ProvinceName);
                 //e.OrganisationName = Convert.ToString(d.OrganisationID);
                 p.Add(e);
             }
@@ -3433,6 +3511,7 @@ namespace eRecruitment.BusinessDomain.DAL
                 e.Knowledge = Convert.ToString(d.Knowledge);
                 e.AdditonalRequirements = Convert.ToString(d.AdditonalRequirements);
                 e.Disclaimer = Convert.ToString(d.Disclaimer);
+                e.VacancyReAdvertiseNO = getVacancyReAdvertiseNo(id);
                 p.Add(e);
             }
             return p;
@@ -4778,9 +4857,11 @@ namespace eRecruitment.BusinessDomain.DAL
                             && x.OrganisationID == OrganisationID).Count();
         }
 
-        public int CheckIfVacancyNumberExists(string BPSVacancyNo)
+        public int CheckIfVacancyNumberExists(string BPSVacancyNo,int organisationID)
         {
-            return _db.tblVacancies.Where(x => x.BPSVacancyNo == BPSVacancyNo).Count();
+
+            
+            return _db.tblVacancies.Where(x => x.BPSVacancyNo == BPSVacancyNo && x.OrganisationID==organisationID).Count();
         }
 
         public List<SalaryTypeModel> GetSalaryTypeList()
@@ -5405,7 +5486,64 @@ namespace eRecruitment.BusinessDomain.DAL
             //return Regex.Replace(value, @"[^0-9A-Za-z ,]", ".").Replace("\u0095", ".").Replace("\u0092", "'").Trim();
             return value.Replace("\u0095", ".").Replace("\u0092", "'").Replace("\u0096", "-").Replace("•", ".").Replace("amp;amp;amp;", "").Replace("&#39;", "'").Replace("&amp;amp;amp;", "&").Replace("‘", "'").Replace("’", "'").Replace("#39", "'").Replace("&quot;", "\"").Replace("&lt;", "<").Replace("&gt;", ">").Replace("&amp;", "&").Trim();
         }
+        /** 
+         * Save Error Log Meaage
+         * By Khutso
+         * */
 
+        public void saveErrorLog(ErrorLog error_Log)
+        {
+            _db.ErrorLogs.InsertOnSubmit(error_Log);
+
+            _db.SubmitChanges();
+
+        }
+
+        /**
+         * Retrieve the number of times the vacancy is re advertised.
+         * By Khutso
+         **/
+
+
+        public int getVacancyReAdvertiseNo(int vacancyID)
+        {
+            int count = 0;
+
+
+             count = _db.tblVacancyReAdvertises.Count(vr => vr.VacancyID == vacancyID );
+         
+            return count;
+
+        }
+
+        /**
+        * Save vacancy re advertise 
+        * By Khutso
+        **/
+        public void VacancyReAdvertise(tblVacancyReAdvertise vacancyReAdvertise)
+        {
+            _db.tblVacancyReAdvertises.InsertOnSubmit(vacancyReAdvertise);
+
+            _db.SubmitChanges();
+            _db.SubmitChanges();
+
+        }
+
+        public void DeleteVacancyQuestion(int vacanyID)
+        {
+          
+
+                var result = (from x in _db.tblVacancyQuestions
+                              where x.VacancyID == vacanyID
+                              select x).ToList();
+
+                if (result != null)
+                {
+                    _db.tblVacancyQuestions.DeleteAllOnSubmit(result);
+
+                }    
+        
+        }
     }
 }
 

@@ -307,9 +307,11 @@
     </Compile>
     <Compile Include="LogHelper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Error_Log.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleMenuItems.cs" />
+    <Compile Include="Models\VacancyReAdvertise.cs" />
     <Compile Include="Models\ValidateVacany.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />

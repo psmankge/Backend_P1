@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 20, 14.625" name="eRecruitmentDataClasses">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 20, 15.375" name="eRecruitmentDataClasses">
   <DataContextMoniker Name="/eRecruitmentDataClassesDataContext" />
   <nestedChildShapes>
-    <classShape Id="2c237776-28f3-4503-b88a-a5a188eb782e" isExpanded="false" absoluteBounds="0.5, 0.5, 2, 0.45">
+    <classShape Id="2c237776-28f3-4503-b88a-a5a188eb782e" absoluteBounds="0.5, 0.5, 2, 1.5785953776041666">
       <DataClassMoniker Name="/eRecruitmentDataClassesDataContext/__MigrationHistory" />
       <nestedChildShapes>
         <elementListCompartment Id="b2545749-6de0-4ae3-8f2b-c2cd3c3f41c7" absoluteBounds="0.515, 0.96, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
@@ -428,10 +428,10 @@
         <elementListCompartment Id="0ad216c9-5145-4e1f-8bd1-e4d1b1f7d513" absoluteBounds="12.015, 12.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="e3b67fc0-29ac-4bf1-a212-a57ac1455514" absoluteBounds="2.75, 6.375, 2, 6.7707340494791648">
+    <classShape Id="e3b67fc0-29ac-4bf1-a212-a57ac1455514" absoluteBounds="2.75, 6.375, 2, 0.80938964843749961">
       <DataClassMoniker Name="/eRecruitmentDataClassesDataContext/tblVacancy" />
       <nestedChildShapes>
-        <elementListCompartment Id="47573872-3261-444f-89b5-0f6f04e2b1c7" absoluteBounds="2.765, 6.8350000000000009, 1.9700000000000002, 6.2107340494791661" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="47573872-3261-444f-89b5-0f6f04e2b1c7" isExpanded="false" absoluteBounds="2.765, 6.835, 1.9700000000000002, 0.2493896484375" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="2540857c-caae-4d7e-8e75-0061b3e57042" isExpanded="false" absoluteBounds="15, 2.875, 2, 0.45">
@@ -613,6 +613,24 @@
       <DataClassMoniker Name="/eRecruitmentDataClassesDataContext/lutJobSpecificQuestion" />
       <nestedChildShapes>
         <elementListCompartment Id="dd063c44-9a28-48d2-8562-99c8b7ef50d5" absoluteBounds="0.51500000000000012, 7.71, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8499b7b2-d95b-4da1-8621-3887d0c30f72" isExpanded="false" absoluteBounds="7.75, 5.5, 2.125, 0.45">
+      <DataClassMoniker Name="/eRecruitmentDataClassesDataContext/ErrorLog" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0647e702-4281-4d95-859c-72a48ee61869" absoluteBounds="7.765, 5.96, 2.0949999999999998, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e256b71e-956a-4108-95e8-b1ee7e2e3b0d" isExpanded="false" absoluteBounds="7.125, 8, 2, 0.45">
+      <DataClassMoniker Name="/eRecruitmentDataClassesDataContext/tblAssignedPerProvince" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a6d44bfd-1f4c-4445-90a3-8de6cc778d26" absoluteBounds="7.14, 8.46, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dd41d21f-dc50-4d37-b61c-8b1dd1575610" absoluteBounds="14.5, 13.75, 2, 1.3862939453125005">
+      <DataClassMoniker Name="/eRecruitmentDataClassesDataContext/tblVacancyReAdvertise" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c8de0add-6393-4f99-a46b-bc207db16b40" absoluteBounds="14.515, 14.21, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

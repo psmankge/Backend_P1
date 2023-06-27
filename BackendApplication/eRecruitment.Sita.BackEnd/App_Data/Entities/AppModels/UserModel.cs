@@ -29,6 +29,19 @@ namespace eRecruitment.BusinessDomain.DAL.Entities.AppModels
 
     }
 
+
+    public class UserProvinceListModel
+    {
+        public string UserID { get; set; }
+        public string OrganisationID { get; set; }
+        [NotMapped]
+        public Array SelectedProvinces { get; set; }
+      
+      
+
+    }
+
+
     public class UserModel
     {
         //Personal Infromation

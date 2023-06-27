@@ -30,6 +30,7 @@ namespace eRecruitment.Sita.BackEnd.Controllers
 
         eRecruitmentDataClassesDataContext _db = new eRecruitmentDataClassesDataContext();
         eRecruitment.BusinessDomain.DAL.DataAccess _dal = new BusinessDomain.DAL.DataAccess();
+        
 
 
         string IDNumber = "";
@@ -87,169 +88,210 @@ namespace eRecruitment.Sita.BackEnd.Controllers
         {
 
             string WebURL = Request.Url.ToString();
-
-            if (id != null)
+            bool API = false;
+            try
             {
 
-                HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(System.Configuration.ConfigurationManager.AppSettings["WebAPIURL"] + id);
-                myRequest.Timeout = 5000;
-                HttpWebResponse response = (HttpWebResponse)myRequest.GetResponse();
-                if (response.StatusCode == HttpStatusCode.OK)
+
+                if (!(String.IsNullOrEmpty(id)))
                 {
-                    Stream dataStream = response.GetResponseStream();
-                    // Open the stream using a StreamReader for easy access.
-                    StreamReader reader = new StreamReader(dataStream);
-                    // Read the content.
-                    string responseFromServer = reader.ReadToEnd();
+                    API = true;
 
-                    dynamic data = JsonConvert.DeserializeObject(responseFromServer);
-
-                    FirstName = Convert.ToString(data["name"]);
-                    SecondName = Convert.ToString(data["name2"]);
-                    ThirdName = Convert.ToString(data["name3"]);
-                    Surname = Convert.ToString(data["surname"]);
-                    EmailAddress = Convert.ToString(data["email"]);
-                    IDNumber = Convert.ToString(data["idNumber"]);
-                    PhoneNumber = Convert.ToString(data["phoneNumber"]);
-
-                    // Display the content.
-                    ViewBag.TestMessage = FirstName;
-                    response.Close();
-                    //return true;
-                }
-                else
-                {
-                    response.Close();
-                    //return false;
-                }
-            }
-            Console.Write("Data Returned");
-            //FirstName = "Ntshengedzeni";
-            //Surname = "Badamarema";
-            //EmailAddress = "Ntshengedzeni.Badamarema@sita.co.za";
-            //IDNumber = "7907265091081";
-            //PhoneNumber = "0725365413";
-
-
-            if (EmailAddress != null && EmailAddress != "")
-            {
-
-                //var data = (from a in _db.AspNetUsers
-                //            join b in _db.tblProfiles on a.Id equals b.UserID
-                //            where a.Email == EmailAddress || b.IDNumber == IDNumber
-                //            select new { a.Id }).Count();
-
-                var data = _db.tblProfiles.Where(x => x.IDNumber == IDNumber).Count();
-                //bool v = 
-                //var isActiveUser = _db.AspNetUsers.Where(x => x.Email == EmailAddress && x.IsActive == 1).Count();
-                //if (isActiveUser == 0)
-                //{
-                //    return View("Error403");
-                //}
-                if (data == 0)
-                {
-                    if (ModelState.IsValid)
-                    {
-                        var user = new ApplicationUser { UserName = EmailAddress, Email = EmailAddress };
-                        var result = await UserManager.CreateAsync(user, "P@$$w0rd1");
-                        if (result.Succeeded)
+                        HttpWebRequest myRequest = (HttpWebRequest)WebRequest.Create(System.Configuration.ConfigurationManager.AppSettings["WebAPIURL"] + id);
+                        myRequest.Timeout = 5000;
+                        HttpWebResponse response = (HttpWebResponse)myRequest.GetResponse();
+                        if (response.StatusCode == HttpStatusCode.OK)
                         {
-                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                            //Insert User Profile                   
-                            if (_dal.CheckIfUserExists(IDNumber) == true)
-                            {
-                                _db.proc_eRecruitmentUpdateUserProfile(user.Id, IDNumber, Surname, FirstName, PhoneNumber, EmailAddress);
-                            }
-                            else
-                            {
-                                _db.proc_eRecruitmentCreateUserProfile(user.Id, IDNumber, string.Empty, Surname, FirstName, PhoneNumber, EmailAddress);
-                            }
-                            //test this one
-                            //if (isActiveUser == 0)
-                            //{
-                            //    //return View("Error403");
-                            //    return RedirectToAction("Error403", "Admin");
-                            //}
-                            //else
-                            //{
-                            //    return RedirectToAction("Index", "Home");
-                            //}
-                            int isActiveUser = (int)_db.AspNetUsers.Where(x => x.Email == EmailAddress && x.IsActive == 1).Count();
+                            Stream dataStream = response.GetResponseStream();
+                            // Open the stream using a StreamReader for easy access.
+                            StreamReader reader = new StreamReader(dataStream);
+                            // Read the content.
+                            string responseFromServer = reader.ReadToEnd();
 
-                            if (isActiveUser == 0)
-                            {
-                                return RedirectToAction("Error403", "Admin");
-                            }
-                            else
-                            {
-                                return RedirectToAction("Index", "Home");
-                            }
+                            dynamic data = JsonConvert.DeserializeObject(responseFromServer);
 
+                            FirstName = Convert.ToString(data["name"]);
+                            SecondName = Convert.ToString(data["name2"]);
+                            ThirdName = Convert.ToString(data["name3"]);
+                            Surname = Convert.ToString(data["surname"]);
+                            EmailAddress = Convert.ToString(data["email"]);
+                            IDNumber = Convert.ToString(data["idNumber"]);
+                            PhoneNumber = Convert.ToString(data["phoneNumber"]);
+
+                            // Display the content.
+                            ViewBag.TestMessage = FirstName;
+                            response.Close();
+                            //return true;
                         }
-                        AddErrors(result);
-                    }
+                        else
+                        {
+                            response.Close();
+                            //return false;
+                        }
+
+
+                   
+
+
+
+
+
+
+
                 }
-                else
+                Console.Write("Data Returned");
+                //FirstName = "Ntshengedzeni";
+                //Surname = "Badamarema";
+                //EmailAddress = "Ntshengedzeni.Badamarema@sita.co.za";
+                //IDNumber = "7907265091081";
+                //PhoneNumber = "0725365413";
+
+
+                if (EmailAddress != null && EmailAddress != "")
                 {
-                    _db.sp_UpdateUserFromPortal(IDNumber, PhoneNumber, EmailAddress, FirstName, Surname, string.Empty);
+                    API = false;
+                    //var data = (from a in _db.AspNetUsers
+                    //            join b in _db.tblProfiles on a.Id equals b.UserID
+                    //            where a.Email == EmailAddress || b.IDNumber == IDNumber
+                    //            select new { a.Id }).Count();
 
-
-                    var result = await SignInManager.PasswordSignInAsync(EmailAddress, "P@$$w0rd1", false, shouldLockout: false);
-                    switch (result)
+                    var data = _db.tblProfiles.Where(x => x.IDNumber == IDNumber).Count();
+                    //bool v = 
+                    //var isActiveUser = _db.AspNetUsers.Where(x => x.Email == EmailAddress && x.IsActive == 1).Count();
+                    //if (isActiveUser == 0)
+                    //{
+                    //    return View("Error403");
+                    //}
+                    if (data == 0)
                     {
-                        case SignInStatus.Success:
-                            string userId = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
-                            var rolename = UserManager.GetRoles(userId);
-                            int isActiveUser = (int)_db.AspNetUsers.Where(x => x.Email == EmailAddress && x.IsActive == 1).Count();
-
-                            //if (isActiveUser == 0)
-                            //{
-                            //    return View("Error403");
-                            //}
-                            if (isActiveUser == 0 || rolename.Count <= 0)
+                        if (ModelState.IsValid)
+                        {
+                            var user = new ApplicationUser { UserName = EmailAddress, Email = EmailAddress };
+                            var result = await UserManager.CreateAsync(user, "P@$$w0rd1");
+                            if (result.Succeeded)
                             {
-                                return RedirectToAction("Error403", "Admin");
-                            }
-                            else
-                            if (rolename.Count != 0)
-                            {
-                                if (rolename[0].ToString() == "Admin")
+                                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                                //Insert User Profile                   
+                                if (_dal.CheckIfUserExists(IDNumber) == true)
                                 {
-                                    return RedirectToAction("DivisionList", "Admin");
+                                    _db.proc_eRecruitmentUpdateUserProfile(user.Id, IDNumber, Surname, FirstName, PhoneNumber, EmailAddress);
                                 }
-                                else if (rolename[0].ToString() == "SysAdmin")
+                                else
                                 {
-                                    return RedirectToAction("Index", "Admin");
+                                    _db.proc_eRecruitmentCreateUserProfile(user.Id, IDNumber, string.Empty, Surname, FirstName, PhoneNumber, EmailAddress);
                                 }
-                                else if (rolename[0].ToString() == "Recruiter")
-                                {
-                                    return RedirectToAction("Dashboard", "Vacancy");
-                                }
-                                else if (rolename[0].ToString() == "Approver")
-                                {
-                                    return RedirectToAction("Dashboard", "Vacancy");
-                                }
-                                else if (rolename[0].ToString() == "Recruiter Admin")
-                                {
-                                    return RedirectToAction("Dashboard", "Vacancy");
-                                }
-                            }
+                                //test this one
+                                //if (isActiveUser == 0)
+                                //{
+                                //    //return View("Error403");
+                                //    return RedirectToAction("Error403", "Admin");
+                                //}
+                                //else
+                                //{
+                                //    return RedirectToAction("Index", "Home");
+                                //}
+                                int isActiveUser = (int)_db.AspNetUsers.Where(x => x.Email == EmailAddress && x.IsActive == 1).Count();
 
-                            return this.RedirectToAction("Index", "Home");
-                        case SignInStatus.LockedOut:
-                            return View("Lockout");
-                        //case SignInStatus.RequiresVerification:
-                        //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                        case SignInStatus.Failure:
-                        default:
-                            ModelState.AddModelError("", "Invalid login attempt.");
-                            //return View(model);
-                            return View();
+                                if (isActiveUser == 0)
+                                {
+                                    return RedirectToAction("Error403", "Admin");
+                                }
+                                else
+                                {
+                                    return RedirectToAction("Index", "Home");
+                                }
+
+                            }
+                            AddErrors(result);
+                        }
+                    }
+                    else
+                    {
+                        _db.sp_UpdateUserFromPortal(IDNumber, PhoneNumber, EmailAddress, FirstName, Surname, string.Empty);
+
+
+                        var result = await SignInManager.PasswordSignInAsync(EmailAddress, "P@$$w0rd1", false, shouldLockout: false);
+                        switch (result)
+                        {
+                            case SignInStatus.Success:
+                                string userId = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
+                                var rolename = UserManager.GetRoles(userId);
+                                int isActiveUser = (int)_db.AspNetUsers.Where(x => x.Email == EmailAddress && x.IsActive == 1).Count();
+
+                                //if (isActiveUser == 0)
+                                //{
+                                //    return View("Error403");
+                                //}
+                                if (isActiveUser == 0 || rolename.Count <= 0)
+                                {
+                                    return RedirectToAction("Error403", "Admin");
+                                }
+                                else
+                                if (rolename.Count != 0)
+                                {
+                                    if (rolename[0].ToString() == "Admin")
+                                    {
+                                        return RedirectToAction("DivisionList", "Admin");
+                                    }
+                                    else if (rolename[0].ToString() == "SysAdmin")
+                                    {
+                                        return RedirectToAction("Index", "Admin");
+                                    }
+                                    else if (rolename[0].ToString() == "Recruiter")
+                                    {
+                                        return RedirectToAction("Dashboard", "Vacancy");
+                                    }
+                                    else if (rolename[0].ToString() == "Approver")
+                                    {
+                                        return RedirectToAction("Dashboard", "Vacancy");
+                                    }
+                                    else if (rolename[0].ToString() == "Recruiter Admin")
+                                    {
+                                        return RedirectToAction("Dashboard", "Vacancy");
+                                    }
+                                }
+
+                                return this.RedirectToAction("Index", "Home");
+                            case SignInStatus.LockedOut:
+                                return View("Lockout");
+                            //case SignInStatus.RequiresVerification:
+                            //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                            case SignInStatus.Failure:
+                            default:
+                                ModelState.AddModelError("", "Invalid login attempt.");
+                                //return View(model);
+                                return View();
+                        }
                     }
                 }
+                
+
+         
+
+
+
+            }
+            catch (Exception ex)
+            {
+                Error_Log error_log = new Error_Log();
+                error_log.setFunctionName(this.ControllerContext);
+
+                ErrorLog errorLog = new ErrorLog()
+                {
+                    ID = Guid.NewGuid(),
+                    Function_Name = error_log.functionName,
+                    DateSubmitted = DateTime.Now,
+                    Message = ex.Message,
+                    Application_Type = System.Configuration.ConfigurationManager.AppSettings["ApplicationType"],
+                    IS_API = API
+
+                };
+
+                _dal.saveErrorLog(errorLog);
+                return View("Error");
+
             }
             ViewBag.ReturnUrl = returnUrl;
-
             return View();
         }
 
@@ -273,84 +315,151 @@ namespace eRecruitment.Sita.BackEnd.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
 
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-            int isActiveUser = (int)_db.AspNetUsers.Where(x => x.Email == model.Email && x.IsActive == 1).Count();
-            //TempData["isActiveUser"] = isActiveUser;
-            //TempData.Keep();
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    string userId = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
-                    var rolename = UserManager.GetRoles(userId);
-                    //TempData["RoleName"] = rolename[0].ToString();
-                    //TempData.Keep();
-                    //LogHelper.WriteLine("UserId :" + userId + " Email : " + model.Email);
-                    //LogHelper.WriteLine("Successfully Logged in :");
-                    //LogHelper.WriteLine("IsActive : " + isActiveUser);
-                    //LogHelper.WriteLine("Role : " + rolename.Count);
-                    //LogHelper.WriteLine("Checking if user is active :");
-                    //if (rolename.Count != 0)
-                    //{
-                    //    LogHelper.WriteLine("Role Name : " + rolename[0].ToString());
-                    //}
+            bool API = false;
+            try {
 
-                    if (isActiveUser == 0 || rolename.Count <= 0)
-                    {
-                        //LogHelper.WriteLine("user not active and redirecting to Error 403 :");
-                        return RedirectToAction("Error403", "Admin");
-                    }
-                    else
-                    {
-                        //LogHelper.WriteLine("user is active and Role has value :");
-                        if (rolename.Count != 0)
+
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
+
+                // This doesn't count login failures towards account lockout
+                // To enable password failures to trigger account lockout, change to shouldLockout: true
+
+                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+                int isActiveUser = (int)_db.AspNetUsers.Where(x => x.Email == model.Email && x.IsActive == 1).Count();
+                //TempData["isActiveUser"] = isActiveUser;
+                //TempData.Keep();
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        string userId = SignInManager.AuthenticationManager.AuthenticationResponseGrant.Identity.GetUserId();
+                        var rolename = UserManager.GetRoles(userId);
+                        //TempData["RoleName"] = rolename[0].ToString();
+                        //TempData.Keep();
+                        //LogHelper.WriteLine("UserId :" + userId + " Email : " + model.Email);
+                        //LogHelper.WriteLine("Successfully Logged in :");
+                        //LogHelper.WriteLine("IsActive : " + isActiveUser);
+                        //LogHelper.WriteLine("Role : " + rolename.Count);
+                        //LogHelper.WriteLine("Checking if user is active :");
+                        //if (rolename.Count != 0)
+                        //{
+                        //    LogHelper.WriteLine("Role Name : " + rolename[0].ToString());
+                        //}
+
+                        if (isActiveUser == 0 || rolename.Count <= 0)
                         {
+                            if (isActiveUser == 0)
+                            {
+                                Error_Log error_log_auth = new Error_Log();
+                                error_log_auth.setFunctionName(this.ControllerContext);
+                               
+                                ErrorLog errorLogAuth = new ErrorLog()
+                                {
+                                    ID = Guid.NewGuid(),
+                                    Function_Name = error_log_auth.functionName,
+                                    DateSubmitted = DateTime.Now,
+                                    Message = model.Email + " " + " not active",
+                                    Application_Type = System.Configuration.ConfigurationManager.AppSettings["ApplicationType"],
+                                    IS_API = API
 
-                            if (rolename[0].ToString() == "Admin" && isActiveUser != 0)
-                            {
-                                //LogHelper.WriteLine("user is active and Role has value and role is Admin:");
-                                return RedirectToAction("DivisionList", "Admin");
+                                };
+
+                                _dal.saveErrorLog(errorLogAuth);
 
                             }
-                            else if (rolename[0].ToString() == "SysAdmin" && isActiveUser != 0)
+                           
+                           
+                            //LogHelper.WriteLine("user not active and redirecting to Error 403 :");
+                            return RedirectToAction("Error403", "Admin");
+                        }
+                        else
+                        {
+                            //LogHelper.WriteLine("user is active and Role has value :");
+                            if (rolename.Count != 0)
                             {
-                                //LogHelper.WriteLine("user is active and Role has value and role is SysAdmin:");
-                                return RedirectToAction("Index", "Admin");
 
-                            }
-                            else if (rolename[0].ToString() == "Recruiter" && isActiveUser != 0)
-                            {
-                                //LogHelper.WriteLine("user is active and Role has value and role is Recruiter:");
-                                return RedirectToAction("Dashboard", "Vacancy");
-                            }
-                            else if (rolename[0].ToString() == "Approver" && isActiveUser != 0)
-                            {
-                                //LogHelper.WriteLine("user is active and Role has value and role is Approver:");
-                                return RedirectToAction("Dashboard", "Vacancy");
-                            }
-                            else if (rolename[0].ToString() == "Recruiter Admin" && isActiveUser != 0)
-                            {
-                                //LogHelper.WriteLine("user is active and Role has value and role is Recruiter Admin:");
-                                return RedirectToAction("Dashboard", "Vacancy");
+                                if (rolename[0].ToString() == "Admin" && isActiveUser != 0)
+                                {
+                                    //LogHelper.WriteLine("user is active and Role has value and role is Admin:");
+                                    return RedirectToAction("DivisionList", "Admin");
+
+                                }
+                                else if (rolename[0].ToString() == "SysAdmin" && isActiveUser != 0)
+                                {
+                                    //LogHelper.WriteLine("user is active and Role has value and role is SysAdmin:");
+                                    return RedirectToAction("Index", "Admin");
+
+                                }
+                                else if (rolename[0].ToString() == "Recruiter" && isActiveUser != 0)
+                                {
+                                    //LogHelper.WriteLine("user is active and Role has value and role is Recruiter:");
+                                    return RedirectToAction("Dashboard", "Vacancy");
+                                }
+                                else if (rolename[0].ToString() == "Approver" && isActiveUser != 0)
+                                {
+                                    //LogHelper.WriteLine("user is active and Role has value and role is Approver:");
+                                    return RedirectToAction("Dashboard", "Vacancy");
+                                }
+                                else if (rolename[0].ToString() == "Recruiter Admin" && isActiveUser != 0)
+                                {
+                                    //LogHelper.WriteLine("user is active and Role has value and role is Recruiter Admin:");
+                                    return RedirectToAction("Dashboard", "Vacancy");
+                                }
                             }
                         }
-                    }
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
-                    return View(model);
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        Error_Log error_log = new Error_Log();
+                        error_log.setFunctionName(this.ControllerContext);
+
+                        ErrorLog errorLog = new ErrorLog()
+                        {
+                            ID = Guid.NewGuid(),
+                            Function_Name = error_log.functionName,
+                            DateSubmitted = DateTime.Now,
+                            Message = model.Email + " " + " SignInStatus.Failure",
+                            Application_Type = System.Configuration.ConfigurationManager.AppSettings["ApplicationType"],
+                            IS_API = API
+
+                        };
+
+                        _dal.saveErrorLog(errorLog);
+                        ModelState.AddModelError("", "Invalid login attempt.");
+                        return View(model);
+                }
+
+
+            } catch (Exception ex) {
+
+                Error_Log error_log = new Error_Log();
+                error_log.setFunctionName(this.ControllerContext);
+
+                ErrorLog errorLog = new ErrorLog()
+                {
+                    ID = Guid.NewGuid(),
+                    Function_Name = error_log.functionName,
+                    DateSubmitted = DateTime.Now,
+                    Message = ex.Message,
+                    Application_Type = System.Configuration.ConfigurationManager.AppSettings["ApplicationType"],
+                    IS_API = API
+
+                };
+
+                _dal.saveErrorLog(errorLog);
+                return View("Error");
+
+
             }
+          
         }
 
         //

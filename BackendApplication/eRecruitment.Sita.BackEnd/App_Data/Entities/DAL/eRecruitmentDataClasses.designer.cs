@@ -303,6 +303,15 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
     partial void InsertlutJobSpecificQuestion(lutJobSpecificQuestion instance);
     partial void UpdatelutJobSpecificQuestion(lutJobSpecificQuestion instance);
     partial void DeletelutJobSpecificQuestion(lutJobSpecificQuestion instance);
+    partial void InsertErrorLog(ErrorLog instance);
+    partial void UpdateErrorLog(ErrorLog instance);
+    partial void DeleteErrorLog(ErrorLog instance);
+    partial void InserttblAssignedPerProvince(tblAssignedPerProvince instance);
+    partial void UpdatetblAssignedPerProvince(tblAssignedPerProvince instance);
+    partial void DeletetblAssignedPerProvince(tblAssignedPerProvince instance);
+    partial void InserttblVacancyReAdvertise(tblVacancyReAdvertise instance);
+    partial void UpdatetblVacancyReAdvertise(tblVacancyReAdvertise instance);
+    partial void DeletetblVacancyReAdvertise(tblVacancyReAdvertise instance);
     #endregion
 		
 		public eRecruitmentDataClassesDataContext() : 
@@ -1140,6 +1149,30 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
 			get
 			{
 				return this.GetTable<lutJobSpecificQuestion>();
+			}
+		}
+		
+		public System.Data.Linq.Table<ErrorLog> ErrorLogs
+		{
+			get
+			{
+				return this.GetTable<ErrorLog>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tblAssignedPerProvince> tblAssignedPerProvinces
+		{
+			get
+			{
+				return this.GetTable<tblAssignedPerProvince>();
+			}
+		}
+		
+		public System.Data.Linq.Table<tblVacancyReAdvertise> tblVacancyReAdvertises
+		{
+			get
+			{
+				return this.GetTable<tblVacancyReAdvertise>();
 			}
 		}
 		
@@ -2134,11 +2167,10 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
 			return ((ISingleResult<sp_tblVacancyListForView_GetResult>)(result.ReturnValue));
 		}
 		
-		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_eRecruitmentInsertUpdateLutJobSpecificQuestion")]
-		public int proc_eRecruitmentInsertUpdateLutJobSpecificQuestion([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobTitleID", DbType="Int")] System.Nullable<int> jobTitleID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobSpecificeQuestionDesc", DbType="VarChar(500)")] string jobSpecificeQuestionDesc, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedDate", DbType="DateTime")] System.Nullable<System.DateTime> createdDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedBy", DbType="VarChar(50)")] string createdBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ModifyDate", DbType="DateTime")] System.Nullable<System.DateTime> modifyDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ModifiedBy", DbType="VarChar(50)")] string modifiedBy)
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_eRecruitmentInsertUpdateLutJobSpecificQuestion", IsComposable=true)]
+		public object proc_eRecruitmentInsertUpdateLutJobSpecificQuestion([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobTitleID", DbType="Int")] System.Nullable<int> jobTitleID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobSpecificeQuestionDesc", DbType="VarChar(500)")] string jobSpecificeQuestionDesc, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedDate", DbType="DateTime")] System.Nullable<System.DateTime> createdDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedBy", DbType="VarChar(50)")] string createdBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ModifyDate", DbType="DateTime")] System.Nullable<System.DateTime> modifyDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ModifiedBy", DbType="VarChar(50)")] string modifiedBy)
 		{
-			IExecuteResult result= this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jobTitleID, jobSpecificeQuestionDesc, createdDate, createdBy, modifyDate, modifiedBy);
-			return ((int)(result.ReturnValue));
+			return ((object)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jobTitleID, jobSpecificeQuestionDesc, createdDate, createdBy, modifyDate, modifiedBy).ReturnValue));
 		}
 	}
 	
@@ -20716,6 +20748,480 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
 					this._ModifiedBy = value;
 					this.SendPropertyChanged("ModifiedBy");
 					this.OnModifiedByChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class ErrorLog : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _ID;
+		
+		private string _Function_Name;
+		
+		private System.DateTime _DateSubmitted;
+		
+		private string _Message;
+		
+		private bool _IS_API;
+		
+		private string _Application_Type;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(System.Guid value);
+    partial void OnIDChanged();
+    partial void OnFunction_NameChanging(string value);
+    partial void OnFunction_NameChanged();
+    partial void OnDateSubmittedChanging(System.DateTime value);
+    partial void OnDateSubmittedChanged();
+    partial void OnMessageChanging(string value);
+    partial void OnMessageChanged();
+    partial void OnIS_APIChanging(bool value);
+    partial void OnIS_APIChanged();
+    partial void OnApplication_TypeChanging(string value);
+    partial void OnApplication_TypeChanged();
+    #endregion
+		
+		public ErrorLog()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", IsPrimaryKey=true)]
+		public System.Guid ID
+		{
+			get
+			{
+				return this._ID;
+			}
+			set
+			{
+				if ((this._ID != value))
+				{
+					this.OnIDChanging(value);
+					this.SendPropertyChanging();
+					this._ID = value;
+					this.SendPropertyChanged("ID");
+					this.OnIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Function_Name", CanBeNull=false)]
+		public string Function_Name
+		{
+			get
+			{
+				return this._Function_Name;
+			}
+			set
+			{
+				if ((this._Function_Name != value))
+				{
+					this.OnFunction_NameChanging(value);
+					this.SendPropertyChanging();
+					this._Function_Name = value;
+					this.SendPropertyChanged("Function_Name");
+					this.OnFunction_NameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DateSubmitted")]
+		public System.DateTime DateSubmitted
+		{
+			get
+			{
+				return this._DateSubmitted;
+			}
+			set
+			{
+				if ((this._DateSubmitted != value))
+				{
+					this.OnDateSubmittedChanging(value);
+					this.SendPropertyChanging();
+					this._DateSubmitted = value;
+					this.SendPropertyChanged("DateSubmitted");
+					this.OnDateSubmittedChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Message", CanBeNull=false)]
+		public string Message
+		{
+			get
+			{
+				return this._Message;
+			}
+			set
+			{
+				if ((this._Message != value))
+				{
+					this.OnMessageChanging(value);
+					this.SendPropertyChanging();
+					this._Message = value;
+					this.SendPropertyChanged("Message");
+					this.OnMessageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IS_API")]
+		public bool IS_API
+		{
+			get
+			{
+				return this._IS_API;
+			}
+			set
+			{
+				if ((this._IS_API != value))
+				{
+					this.OnIS_APIChanging(value);
+					this.SendPropertyChanging();
+					this._IS_API = value;
+					this.SendPropertyChanged("IS_API");
+					this.OnIS_APIChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Application_Type", CanBeNull=false)]
+		public string Application_Type
+		{
+			get
+			{
+				return this._Application_Type;
+			}
+			set
+			{
+				if ((this._Application_Type != value))
+				{
+					this.OnApplication_TypeChanging(value);
+					this.SendPropertyChanging();
+					this._Application_Type = value;
+					this.SendPropertyChanged("Application_Type");
+					this.OnApplication_TypeChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class tblAssignedPerProvince : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _AssignedPerProvinceID;
+		
+		private string _RecruiterID;
+		
+		private int _OrganisationID;
+		
+		private int _ProvinceID;
+		
+		private System.DateTime _CreatedOn;
+		
+		private System.Guid _CreatedBy;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAssignedPerProvinceIDChanging(int value);
+    partial void OnAssignedPerProvinceIDChanged();
+    partial void OnRecruiterIDChanging(string value);
+    partial void OnRecruiterIDChanged();
+    partial void OnOrganisationIDChanging(int value);
+    partial void OnOrganisationIDChanged();
+    partial void OnProvinceIDChanging(int value);
+    partial void OnProvinceIDChanged();
+    partial void OnCreatedOnChanging(System.DateTime value);
+    partial void OnCreatedOnChanged();
+    partial void OnCreatedByChanging(System.Guid value);
+    partial void OnCreatedByChanged();
+    #endregion
+		
+		public tblAssignedPerProvince()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AssignedPerProvinceID", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int AssignedPerProvinceID
+		{
+			get
+			{
+				return this._AssignedPerProvinceID;
+			}
+			set
+			{
+				if ((this._AssignedPerProvinceID != value))
+				{
+					this.OnAssignedPerProvinceIDChanging(value);
+					this.SendPropertyChanging();
+					this._AssignedPerProvinceID = value;
+					this.SendPropertyChanged("AssignedPerProvinceID");
+					this.OnAssignedPerProvinceIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RecruiterID", CanBeNull=false)]
+		public string RecruiterID
+		{
+			get
+			{
+				return this._RecruiterID;
+			}
+			set
+			{
+				if ((this._RecruiterID != value))
+				{
+					this.OnRecruiterIDChanging(value);
+					this.SendPropertyChanging();
+					this._RecruiterID = value;
+					this.SendPropertyChanged("RecruiterID");
+					this.OnRecruiterIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrganisationID")]
+		public int OrganisationID
+		{
+			get
+			{
+				return this._OrganisationID;
+			}
+			set
+			{
+				if ((this._OrganisationID != value))
+				{
+					this.OnOrganisationIDChanging(value);
+					this.SendPropertyChanging();
+					this._OrganisationID = value;
+					this.SendPropertyChanged("OrganisationID");
+					this.OnOrganisationIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProvinceID")]
+		public int ProvinceID
+		{
+			get
+			{
+				return this._ProvinceID;
+			}
+			set
+			{
+				if ((this._ProvinceID != value))
+				{
+					this.OnProvinceIDChanging(value);
+					this.SendPropertyChanging();
+					this._ProvinceID = value;
+					this.SendPropertyChanged("ProvinceID");
+					this.OnProvinceIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedOn")]
+		public System.DateTime CreatedOn
+		{
+			get
+			{
+				return this._CreatedOn;
+			}
+			set
+			{
+				if ((this._CreatedOn != value))
+				{
+					this.OnCreatedOnChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedOn = value;
+					this.SendPropertyChanged("CreatedOn");
+					this.OnCreatedOnChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy")]
+		public System.Guid CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this.OnCreatedByChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedBy = value;
+					this.SendPropertyChanged("CreatedBy");
+					this.OnCreatedByChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="")]
+	public partial class tblVacancyReAdvertise : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Guid _ReAdvertiseID;
+		
+		private string _BPSNumber;
+		
+		private int _VacancyID;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnReAdvertiseIDChanging(System.Guid value);
+    partial void OnReAdvertiseIDChanged();
+    partial void OnBPSNumberChanging(string value);
+    partial void OnBPSNumberChanged();
+    partial void OnVacancyIDChanging(int value);
+    partial void OnVacancyIDChanged();
+    #endregion
+		
+		public tblVacancyReAdvertise()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ReAdvertiseID", IsPrimaryKey=true)]
+		public System.Guid ReAdvertiseID
+		{
+			get
+			{
+				return this._ReAdvertiseID;
+			}
+			set
+			{
+				if ((this._ReAdvertiseID != value))
+				{
+					this.OnReAdvertiseIDChanging(value);
+					this.SendPropertyChanging();
+					this._ReAdvertiseID = value;
+					this.SendPropertyChanged("ReAdvertiseID");
+					this.OnReAdvertiseIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_BPSNumber", CanBeNull=false)]
+		public string BPSNumber
+		{
+			get
+			{
+				return this._BPSNumber;
+			}
+			set
+			{
+				if ((this._BPSNumber != value))
+				{
+					this.OnBPSNumberChanging(value);
+					this.SendPropertyChanging();
+					this._BPSNumber = value;
+					this.SendPropertyChanged("BPSNumber");
+					this.OnBPSNumberChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VacancyID")]
+		public int VacancyID
+		{
+			get
+			{
+				return this._VacancyID;
+			}
+			set
+			{
+				if ((this._VacancyID != value))
+				{
+					this.OnVacancyIDChanging(value);
+					this.SendPropertyChanging();
+					this._VacancyID = value;
+					this.SendPropertyChanged("VacancyID");
+					this.OnVacancyIDChanged();
 				}
 			}
 		}
