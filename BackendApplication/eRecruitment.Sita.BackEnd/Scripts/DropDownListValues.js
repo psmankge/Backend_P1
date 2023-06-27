@@ -1344,12 +1344,11 @@ function customValidation(event) {
     var location = $("#LocationID").val();
     //=====================================================
     
-    var controllerAction = window.location.pathname.split('/');
+    if ($("#myBPSVacancyNoHidden").val() === "EditVacancy") {
 
-    if (controllerAction[2] === "EditVacancy") {
-
-         validateBPSNumber = false;
+        validateBPSNumber = false;
     }
+
     if (validateBPSNumber) {
         // prevent the form submit
         event.preventDefault();
