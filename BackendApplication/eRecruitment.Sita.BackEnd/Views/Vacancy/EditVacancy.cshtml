@@ -804,7 +804,10 @@
 
                                     <div class="clearfix"></div><br />
                                     <div class="col-md-12 pull-right">
-                                        <input type="submit" onclick="customValidation(event)" class="btn btn-success" value="Save" /> |
+                                        <input type="submit" onclick="customValidation(event)" class="btn btn-success" value="Save" /> | 
+                                        <a href="@Url.Action("JobSpecQuestionList", "Vacancy",  Session["sessVacancyID"])" type="button" class="btn btn-warning">
+                                            Edit Job Specific Question(s)
+                                        </a> |
                                         <a href="@Url.Action("VacancyList", "Vacancy")" onclick="return confirm('Are you sure you want to cancel?')" type="button" class="btn btn-danger">
                                             Cancel
                                         </a>

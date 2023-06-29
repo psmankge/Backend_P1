@@ -999,6 +999,12 @@ namespace eRecruitment.BusinessDomain.DAL
             return _db.lutEmployementTypes.Where(x => x.EmploymentType == EmploymentType).Count();
         }
 
+        //Peter 20230425
+        //Check if Employment Type Exists
+        public int CheckIfJobSpecQuestionExists(string JobspecQuestionDesc)
+        {
+            return _db.lutJobSpecificQuestions.Where(x => x.JobSpecificeQuestionDesc == JobspecQuestionDesc).Count();
+        }
         //Insert Employment Type
         public void InsertIntoEmploymentType(string EmploymentType)
         {
@@ -1026,6 +1032,25 @@ namespace eRecruitment.BusinessDomain.DAL
             return p;
         }
 
+        //Peter
+        public List<JobJobSpecificQuestionModel> GetJobSpecQuestionForEdit(int id)
+        {
+            var p = new List<JobJobSpecificQuestionModel>();
+            _db = new eRecruitmentDataClassesDataContext();
+
+            var data = _db.lutJobSpecificQuestions.Where(x => x.JobSpecificeQuestionID == id).ToList();
+
+            foreach (var d in data)
+            {
+                JobJobSpecificQuestionModel e = new JobJobSpecificQuestionModel();
+                e.JobSpecificeQuestionID = d.JobSpecificeQuestionID;
+                e.VacancyID = Convert.ToInt32(d.VacancyID);
+                e.JobSpecificeQuestionDesc = Convert.ToString(d.JobSpecificeQuestionDesc);
+                p.Add(e);
+            }
+            return p;
+        }
+
         //Update EmploymentType
         public void UpdateIntoEmploymentType(int id, string EmploymentType)
         {
@@ -1035,11 +1060,29 @@ namespace eRecruitment.BusinessDomain.DAL
 
         }
 
+
+        //Peter
+        //Update Job Specific Question
+        public void UpdateIntolutJobSpecificQuestion(int id, string JobSpecificeQuestionDesc)
+        {
+            _db = new eRecruitmentDataClassesDataContext();
+
+            _db.proc_eRecruitmentUpdateJobSpecificeQuestion(id, JobSpecificeQuestionDesc);
+
+        }
+        //Peter
         //Delete EmploymentType
         public void DeleteIntoEmploymentType(int id)
         {
             _db = new eRecruitmentDataClassesDataContext();
             _db.proc_eRecruitmentDeleteEmployementType(id);
+        }
+
+        //Delete EmploymentType
+        public void DeleteIntoJobSpecQuestion(int id)
+        {
+            _db = new eRecruitmentDataClassesDataContext();
+            _db.proc_eRecruitmentDeleteJobSpecificQuestion(id);
         }
 
         //Get Quetions banks Per ORG
@@ -4544,6 +4587,33 @@ namespace eRecruitment.BusinessDomain.DAL
             }
             return p;
         }
+
+        //=============================Peter 202020414==========================
+        public List<JobJobSpecificQuestionModel> GetJobSpecificQuestionsList(int ID)
+        {
+            var p = new List<JobJobSpecificQuestionModel>();
+            _db = new eRecruitmentDataClassesDataContext();
+
+            var data = (from a in _db.lutJobSpecificQuestions
+                        where a.VacancyID == ID
+                        select new
+                        {
+                            JobSpecificeQuestionID = a.JobSpecificeQuestionID,
+                            VacancyID = a.VacancyID,
+                            jobSpecificQuestion = a.JobSpecificeQuestionDesc
+                        });
+
+            foreach (var d in data)
+            {
+                JobJobSpecificQuestionModel e = new JobJobSpecificQuestionModel();
+                e.JobSpecificeQuestionID = d.JobSpecificeQuestionID;
+                e.VacancyID = Convert.ToInt32(d.VacancyID);
+                e.JobSpecificeQuestionDesc = Convert.ToString(d.jobSpecificQuestion);
+                p.Add(e);
+            }
+            return p;
+        }
+        //=====================================================================
 
         //Get Get Candidate Skill List
         public List<CandidateSkillsProfileModel> GetCandidateSkillList(int ID)

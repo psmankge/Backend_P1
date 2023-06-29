@@ -933,12 +933,16 @@ namespace eRecruitment.Sita.BackEnd.Controllers
                 if (model.LeadComps != null) { LeadComps = this.RemoveSpecialCharacters(model.LeadComps); } else { LeadComps = string.Empty; }
                 if (model.BehaveComps != null) { BehaveComps = this.RemoveSpecialCharacters(model.BehaveComps); } else { BehaveComps = string.Empty; }
 
-                int? vacancyid = _dal.InsertVacancy(userid, Convert.ToInt32(Organisation), model.BPSVacancyNo, model.DivisionID, model.DepartmentID, model.JobTitleID,
-                                                   model.SalaryTypeID, Recruiter, RecruiterEmail, model.RecruiterTel, model.RecruiterUserId, model.Manager, model.GenderID, model.RaceID,
-                                                   model.EmploymentTypeID, model.ContractDuration, Convert.ToDateTime(model.ClosingDate), model.NumberOfOpenings, model.VancyTypeID,
-                                                   DeligationReasons, model.Location, AdditonalRequirements, VacancyProfileID[0].VacancyProfileID,
-                                                   VacancyPurpose, QualificationAndExperience, TechComps, Disclaimer, Responsibility,
-                                                   Knowledge, LeadComps, BehaveComps);
+                var BpsNo = model.BPSVacancyNo;
+                int startIndex = 0, Length = 11;
+                BpsNo = model.BPSVacancyNo.Replace(System.Environment.NewLine, "").Substring(0, 11);
+
+                int? vacancyid = _dal.InsertVacancy(userid, Convert.ToInt32(Organisation), BpsNo, model.DivisionID, model.DepartmentID, model.JobTitleID,
+                                                       model.SalaryTypeID, Recruiter, RecruiterEmail, model.RecruiterTel, model.RecruiterUserId, model.Manager, model.GenderID, model.RaceID,
+                                                       model.EmploymentTypeID, model.ContractDuration, Convert.ToDateTime(model.ClosingDate), model.NumberOfOpenings, model.VancyTypeID,
+                                                       DeligationReasons, model.Location, AdditonalRequirements, VacancyProfileID[0].VacancyProfileID,
+                                                       VacancyPurpose, QualificationAndExperience, TechComps, Disclaimer, Responsibility,
+                                                       Knowledge, LeadComps, BehaveComps);
 
                 if (vacancyid != null)
                 {
@@ -947,16 +951,24 @@ namespace eRecruitment.Sita.BackEnd.Controllers
                         string vqid = null;
                         vqid = string.Join(";", model.VacancyQuestionID);
                         _dal.InsertUpdateVacancyQuestion((int)vacancyid, Convert.ToString(vqid));
-
                     }
 
-                    if (model.BPSVacancyNo != null)
+                    if (BpsNo != null)
                     {
-                        String BPSNumber = model.BPSVacancyNo;
+                        for (int i = 0; i < model.NumberOfOpenings; i++)
+                        {
+                            
+                            BpsNo = model.BPSVacancyNo.Replace(" ", "").Replace(System.Environment.NewLine, "").Replace(",", "").Substring(startIndex, Length);
 
-                        _dal.InsertUpdateVacancyBPSNumber((int)vacancyid, Convert.ToString(BPSNumber));
-
+                            _dal.InsertUpdateVacancyBPSNumber((int)vacancyid, Convert.ToString(BpsNo));
+                            startIndex += 11;
+                        }
                     }
+                    //if (model.BPSVacancyNo != null)
+                    //{
+                    //    String BPSNumber = model.BPSVacancyNo;
+                    //    _dal.InsertUpdateVacancyBPSNumber((int)vacancyid, Convert.ToString(BPSNumber));
+                    //}
 
                     // create a loop that will filter any thing inside fc that starts with sk_
                     List<string> listOfSkills = new List<string>();
@@ -1019,20 +1031,135 @@ namespace eRecruitment.Sita.BackEnd.Controllers
 
                     var ReferenceNo = _dal.GetVacancyRefNo((int)vacancyid);
 
-                    TempData["message"] = "You have successfully Uploaded the Vacancy, Here is Your Reference No:" + "(" + ReferenceNo[0].ReferenceNo + ")";
+                    //Peter added if statement 20230523
+                    if (model.NumberOfOpenings > 1)
+                    {
+                        TempData["message"] = "You have successfully Uploaded " + model.NumberOfOpenings + " Vacancies, Here is Your Reference No:" + "(" + ReferenceNo[0].ReferenceNo + ")";
+                    }
+                    else
+                    {
+                        TempData["message"] = "You have successfully Uploaded the Vacancy, Here is Your Reference No:" + "(" + ReferenceNo[0].ReferenceNo + ")";
+                    }
 
                 }
 
-                return RedirectToAction("VacancyList", new { id = userid });
+                //Peter commented on 20230213
+                //return RedirectToAction("AddVacancy", new { id = userid });
+                Session["sessVacancyID"] = (int)vacancyid;
+
+                return RedirectToAction("AddJobSpecQuestion", new { id = Session["sessVacancyID"] });
+                //return RedirectToAction("VacancyList", new { id = userid });
             }
             return View(model);
         }
+
+        //==================PETER - JOB SPECIFIC QUESTION FUNCTIONALITY 20230405 - START============================================
+        public ActionResult JobSpecQuestionList(int? id)
+        {
+            int VacancyId = Convert.ToInt32(Session["sessVacancyID"]);
+            if (VacancyId == 0)
+            {
+                VacancyId = Convert.ToInt32(id);
+            }
+
+            ViewBag.JobSpecQuestionList = _dal.GetJobSpecificQuestionsList(VacancyId);
+
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult AddJobSpecQuestion(int? id)
+        {
+            JobJobSpecificQuestionModel model = new JobJobSpecificQuestionModel();
+            return View(model);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult AddJobSpecQuestion(JobJobSpecificQuestionModel model, int? id)
+        {
+            var data = _dal.CheckIfJobSpecQuestionExists(model.JobSpecificeQuestionDesc);
+
+            if (data > 0)
+            {
+                ModelState.AddModelError(" ", "Record already Exist");
+            }
+            if (ModelState.IsValid)
+            {
+                if (id != 0)
+                {
+                    model.VacancyID = Convert.ToInt32(id);
+                }
+                if (model.VacancyID == 0)
+                {
+                    model.VacancyID = Convert.ToInt32(Session["sessVacancyID"]);
+                }
+
+                //Added for loops because of multiple vacancies per advert 
+                var RefNo = _db.tblVacancies.Where(x => x.ID == model.VacancyID).SingleOrDefault().ReferenceNo;
+                var CountRefNo = _db.tblVacancies.Where(x => x.ReferenceNo == Convert.ToString(RefNo)).Count();
+                var myVacancyIDList = _db.tblVacancies.Where(x => x.ReferenceNo == RefNo).ToList().Select(x => x.ID);
+                List<string> list = new List<string>();
+                foreach (var a in myVacancyIDList)
+                {
+                    list.Add(Convert.ToString(a));
+                }
+                for (int i = 0; i < CountRefNo; i++)
+                {
+                    _dal.InsertUpdateLutJobSpecificQuestion(Convert.ToInt32(list[i]), model.JobSpecificeQuestionDesc, DateTime.Now, User.Identity.GetUserId(), null, null);
+                    //****below is an original code commented on 20230602 - Peter**/
+                    //_dal.InsertUpdateLutJobSpecificQuestion(Convert.ToInt32(model.VacancyID), model.JobSpecificeQuestionDesc, DateTime.Now, User.Identity.GetUserId(), null, null);
+                }
+
+                TempData["message"] = "Job specific question has been successfully added";
+
+                return RedirectToAction("JobSpecQuestionList", "Vacancy", model.VacancyID);
+            }
+            return View();
+        }
+
+        [Authorize]
+        [HttpGet]
+        public ActionResult EditJobSpecQuestion(int id)
+        {
+
+            var Div = _dal.GetJobSpecQuestionForEdit(id);
+
+            return View(Div);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditJobSpecQuestion(JobJobSpecificQuestionModel item, int id)
+        {
+
+            if (ModelState.IsValid)
+            {
+                _dal.UpdateIntolutJobSpecificQuestion(id, item.JobSpecificeQuestionDesc);
+
+                TempData["message"] = "Job specific question has been successfully edited";
+
+                return RedirectToAction("JobSpecQuestionList", "Vacancy");
+            }
+            return View();
+        }
+        public ActionResult DeleteJobSpecQuestion(int id)
+        {
+            _dal.DeleteIntoJobSpecQuestion(id);
+            TempData["message"] = "Question Successfully Deleted";
+            return RedirectToAction("JobSpecQuestionList", "Vacancy");
+        }
+        //===================================================================== END ========================================================
 
         //Edit Vacancy 
         [Authorize]
         [HttpGet]
         public ActionResult EditVacancy(int id)
         {
+            
+            Session["sessVacancyID"] = id;
+
             string userid = User.Identity.GetUserId();
             var orgID = _dal.GetOrganisationID(userid);
 
@@ -1080,6 +1207,7 @@ namespace eRecruitment.Sita.BackEnd.Controllers
             string RecruiterEmail = fc["EmailAddress"];
             string userid = User.Identity.GetUserId();
             Session["sessUserID"] = userid;
+            
 
 
             //if (postedFile != null && postedFile.ContentLength > 00)

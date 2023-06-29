@@ -8854,6 +8854,9 @@
     <Content Include="Views\Vacancy\ReAdvertiseVacancy.cshtml" />
     <Content Include="Views\Vacancy\ExtendVacancyClosingDate.cshtml" />
     <Content Include="Views\Vacancy\_AddJobSpecificQuestion.cshtml" />
+    <Content Include="Views\Vacancy\AddJobSpecQuestion.cshtml" />
+    <Content Include="Views\Vacancy\JobSpecQuestionList.cshtml" />
+    <Content Include="Views\Vacancy\EditJobSpecQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\bower_components\ckeditor\plugins\balloonpanel\skins\moono-lisa\images\hidpi\" />
