@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
+<<<<<<< HEAD
     ""
   ],
   "SelectedNode": "\\eRecruitment.Sita.BackEnd.sln",
+=======
+    "",
+    "\\BackendApplication",
+    "\\BackendApplication\\eRecruitment.Sita.BackEnd",
+    "\\BackendApplication\\eRecruitment.Sita.BackEnd\\Views",
+    "\\eRecruitmentObjects"
+  ],
+>>>>>>> 0cd793ff04401f3e2573804f37f753c1a4d4b722
   "PreviewInSolutionExplorer": false
 }

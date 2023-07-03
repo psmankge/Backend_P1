@@ -833,7 +833,6 @@
     <Content Include="Content\bower_components\ckeditor\plugins\balloonpanel\skins\kama\balloonpanel.css" />
     <Content Include="Content\bower_components\ckeditor\plugins\balloonpanel\skins\moono-lisa\balloonpanel.css" />
     <Content Include="Content\bower_components\ckeditor\plugins\balloonpanel\skins\moono-lisa\images\close.png" />
-    <Content Include="Content\bower_components\ckeditor\plugins\balloonpanel\skins\moono-lisa\images\hidpi\close.png" />
     <Content Include="Content\bower_components\ckeditor\plugins\balloonpanel\skins\moono\balloonpanel.css" />
     <Content Include="Content\bower_components\ckeditor\plugins\balloonpanel\skins\moono\images\close.png" />
     <Content Include="Content\bower_components\ckeditor\plugins\balloonpanel\skins\moono\images\hidpi\close.png" />
@@ -8857,8 +8856,12 @@
     <Content Include="Views\Vacancy\ReAdvertiseVacancy.cshtml" />
     <Content Include="Views\Vacancy\ExtendVacancyClosingDate.cshtml" />
     <Content Include="Views\Vacancy\_AddJobSpecificQuestion.cshtml" />
+    <Content Include="Views\Vacancy\AddJobSpecQuestion.cshtml" />
+    <Content Include="Views\Vacancy\JobSpecQuestionList.cshtml" />
+    <Content Include="Views\Vacancy\EditJobSpecQuestion.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\bower_components\ckeditor\plugins\balloonpanel\skins\moono-lisa\images\hidpi\" />
     <Folder Include="OnlineHelp\SITA-Official\mobile\slides\" />
     <Folder Include="OnlineHelp\SITA-Official\story_content\notes\" />
     <Folder Include="OnlineHelp\SITA-Official\story_content\slides\" />

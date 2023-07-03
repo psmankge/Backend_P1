@@ -215,7 +215,7 @@ namespace eRecruitment.BusinessDomain.DAL.Entities.AppModels
     {
         [Key]
         public int JobSpecificeQuestionID { get; set; }
-        public int JobTitleID { get; set; }
+        public int VacancyID { get; set; }
         public string JobSpecificeQuestionDesc { get; set; }
         public string CreatedDate { get; set; }
         public string CreatedBy { get; set; }

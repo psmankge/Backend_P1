@@ -22,7 +22,7 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
 	using System;
 	
 	
-	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="eRecruitmentDb")]
+	[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="eRecruitmentDB")]
 	public partial class eRecruitmentDataClassesDataContext : System.Data.Linq.DataContext
 	{
 		
@@ -315,7 +315,7 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
     #endregion
 		
 		public eRecruitmentDataClassesDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["eRecruitmentDBConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -2167,10 +2167,32 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
 			return ((ISingleResult<sp_tblVacancyListForView_GetResult>)(result.ReturnValue));
 		}
 		
+<<<<<<< HEAD
 		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_eRecruitmentInsertUpdateLutJobSpecificQuestion", IsComposable=true)]
 		public object proc_eRecruitmentInsertUpdateLutJobSpecificQuestion([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobTitleID", DbType="Int")] System.Nullable<int> jobTitleID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobSpecificeQuestionDesc", DbType="VarChar(500)")] string jobSpecificeQuestionDesc, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedDate", DbType="DateTime")] System.Nullable<System.DateTime> createdDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedBy", DbType="VarChar(50)")] string createdBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ModifyDate", DbType="DateTime")] System.Nullable<System.DateTime> modifyDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ModifiedBy", DbType="VarChar(50)")] string modifiedBy)
 		{
 			return ((object)(this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jobTitleID, jobSpecificeQuestionDesc, createdDate, createdBy, modifyDate, modifiedBy).ReturnValue));
+=======
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_eRecruitmentUpdateJobSpecificeQuestion")]
+		public int proc_eRecruitmentUpdateJobSpecificeQuestion([global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobSpecificeQuestionID", DbType="Int")] System.Nullable<int> jobSpecificeQuestionID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobSpecificeQuestionDesc", DbType="VarChar(500)")] string jobSpecificeQuestionDesc)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), jobSpecificeQuestionID, jobSpecificeQuestionDesc);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_eRecruitmentDeleteJobSpecificQuestion")]
+		public int proc_eRecruitmentDeleteJobSpecificQuestion([global::System.Data.Linq.Mapping.ParameterAttribute(DbType="Int")] System.Nullable<int> id)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), id);
+			return ((int)(result.ReturnValue));
+		}
+		
+		[global::System.Data.Linq.Mapping.FunctionAttribute(Name="dbo.proc_eRecruitmentInsertUpdateLutJobSpecificQuestion")]
+		public int proc_eRecruitmentInsertUpdateLutJobSpecificQuestion([global::System.Data.Linq.Mapping.ParameterAttribute(Name="VacancyID", DbType="Int")] System.Nullable<int> vacancyID, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="JobSpecificeQuestionDesc", DbType="VarChar(500)")] string jobSpecificeQuestionDesc, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedDate", DbType="DateTime")] System.Nullable<System.DateTime> createdDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="CreatedBy", DbType="VarChar(50)")] string createdBy, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ModifyDate", DbType="DateTime")] System.Nullable<System.DateTime> modifyDate, [global::System.Data.Linq.Mapping.ParameterAttribute(Name="ModifiedBy", DbType="VarChar(50)")] string modifiedBy)
+		{
+			IExecuteResult result = this.ExecuteMethodCall(this, ((MethodInfo)(MethodInfo.GetCurrentMethod())), vacancyID, jobSpecificeQuestionDesc, createdDate, createdBy, modifyDate, modifiedBy);
+			return ((int)(result.ReturnValue));
+>>>>>>> 0cd793ff04401f3e2573804f37f753c1a4d4b722
 		}
 	}
 	
@@ -20575,7 +20597,7 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
 		
 		private int _JobSpecificeQuestionID;
 		
-		private System.Nullable<int> _JobTitleID;
+		private System.Nullable<int> _VacancyID;
 		
 		private string _JobSpecificeQuestionDesc;
 		
@@ -20593,8 +20615,8 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
     partial void OnCreated();
     partial void OnJobSpecificeQuestionIDChanging(int value);
     partial void OnJobSpecificeQuestionIDChanged();
-    partial void OnJobTitleIDChanging(System.Nullable<int> value);
-    partial void OnJobTitleIDChanged();
+    partial void OnVacancyIDChanging(System.Nullable<int> value);
+    partial void OnVacancyIDChanged();
     partial void OnJobSpecificeQuestionDescChanging(string value);
     partial void OnJobSpecificeQuestionDescChanged();
     partial void OnCreatedDateChanging(System.Nullable<System.DateTime> value);
@@ -20632,22 +20654,22 @@ namespace eRecruitment.Sita.BackEnd.App_Data.Entities.DAL
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_JobTitleID", DbType="Int")]
-		public System.Nullable<int> JobTitleID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_VacancyID", DbType="Int")]
+		public System.Nullable<int> VacancyID
 		{
 			get
 			{
-				return this._JobTitleID;
+				return this._VacancyID;
 			}
 			set
 			{
-				if ((this._JobTitleID != value))
+				if ((this._VacancyID != value))
 				{
-					this.OnJobTitleIDChanging(value);
+					this.OnVacancyIDChanging(value);
 					this.SendPropertyChanging();
-					this._JobTitleID = value;
-					this.SendPropertyChanged("JobTitleID");
-					this.OnJobTitleIDChanged();
+					this._VacancyID = value;
+					this.SendPropertyChanged("VacancyID");
+					this.OnVacancyIDChanged();
 				}
 			}
 		}

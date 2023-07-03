@@ -1077,6 +1077,12 @@ namespace eRecruitment.BusinessDomain.DAL
             return _db.lutEmployementTypes.Where(x => x.EmploymentType == EmploymentType).Count();
         }
 
+        //Peter 20230425
+        //Check if Employment Type Exists
+        public int CheckIfJobSpecQuestionExists(string JobspecQuestionDesc)
+        {
+            return _db.lutJobSpecificQuestions.Where(x => x.JobSpecificeQuestionDesc == JobspecQuestionDesc).Count();
+        }
         //Insert Employment Type
         public void InsertIntoEmploymentType(string EmploymentType)
         {
@@ -1104,6 +1110,25 @@ namespace eRecruitment.BusinessDomain.DAL
             return p;
         }
 
+        //Peter
+        public List<JobJobSpecificQuestionModel> GetJobSpecQuestionForEdit(int id)
+        {
+            var p = new List<JobJobSpecificQuestionModel>();
+            _db = new eRecruitmentDataClassesDataContext();
+
+            var data = _db.lutJobSpecificQuestions.Where(x => x.JobSpecificeQuestionID == id).ToList();
+
+            foreach (var d in data)
+            {
+                JobJobSpecificQuestionModel e = new JobJobSpecificQuestionModel();
+                e.JobSpecificeQuestionID = d.JobSpecificeQuestionID;
+                e.VacancyID = Convert.ToInt32(d.VacancyID);
+                e.JobSpecificeQuestionDesc = Convert.ToString(d.JobSpecificeQuestionDesc);
+                p.Add(e);
+            }
+            return p;
+        }
+
         //Update EmploymentType
         public void UpdateIntoEmploymentType(int id, string EmploymentType)
         {
@@ -1113,11 +1138,29 @@ namespace eRecruitment.BusinessDomain.DAL
 
         }
 
+
+        //Peter
+        //Update Job Specific Question
+        public void UpdateIntolutJobSpecificQuestion(int id, string JobSpecificeQuestionDesc)
+        {
+            _db = new eRecruitmentDataClassesDataContext();
+
+            _db.proc_eRecruitmentUpdateJobSpecificeQuestion(id, JobSpecificeQuestionDesc);
+
+        }
+        //Peter
         //Delete EmploymentType
         public void DeleteIntoEmploymentType(int id)
         {
             _db = new eRecruitmentDataClassesDataContext();
             _db.proc_eRecruitmentDeleteEmployementType(id);
+        }
+
+        //Delete EmploymentType
+        public void DeleteIntoJobSpecQuestion(int id)
+        {
+            _db = new eRecruitmentDataClassesDataContext();
+            _db.proc_eRecruitmentDeleteJobSpecificQuestion(id);
         }
 
         //Get Quetions banks Per ORG
@@ -2996,7 +3039,7 @@ namespace eRecruitment.BusinessDomain.DAL
             _db = new eRecruitmentDataClassesDataContext();
 
             //============Peter 20221028============
-            var VacancyType = _db.lutVacancyTypes.OrderBy(x=>x.VacancyTypeName).ToList();
+            var VacancyType = _db.lutVacancyTypes.OrderBy(x => x.VacancyTypeName).ToList();
             //======================================
             //var VacancyType = _db.lutVacancyTypes.ToList();
 
@@ -4042,10 +4085,16 @@ namespace eRecruitment.BusinessDomain.DAL
             return fQuestions;
         }
 
+        //================== Removed as per client request -Peter 20230324 ====================
+        //public DataTable GeteRecruitmentScreenedCandidateList(string VacancyID, string ProvinceID, string GenderID, string RaceID,
+        //                                            int Disability, int CVAttached, int IDAttached, int AgeRange,
+        //                                            string questionBank, int professioonallyRegistered,
+        //                                            int previouslyEmployedPS, int matricCompleted, int driversLicence)
         public DataTable GeteRecruitmentScreenedCandidateList(string VacancyID, string ProvinceID, string GenderID, string RaceID,
-                                                    int Disability, int CVAttached, int IDAttached, int AgeRange,
-                                                    string questionBank, int professioonallyRegistered,
-                                                    int previouslyEmployedPS, int matricCompleted, int driversLicence)
+                                             int Disability, int CVAttached, int AgeRange,
+                                             string questionBank, int professioonallyRegistered,
+                                             int previouslyEmployedPS, int matricCompleted, int driversLicence)
+        //========================================================================================
         {
             DataTable dt = new DataTable();
             using (SqlConnection sCon = new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
@@ -4059,7 +4108,10 @@ namespace eRecruitment.BusinessDomain.DAL
                     oCommand.Parameters.AddWithValue("@RaceID", RaceID);
                     oCommand.Parameters.AddWithValue("@Disability", Disability);
                     oCommand.Parameters.AddWithValue("@CVAttached", CVAttached);
-                    oCommand.Parameters.AddWithValue("@IDAttached", IDAttached);
+                    //================== Removed as per client request -Peter 20230324 ====================
+                    //oCommand.Parameters.AddWithValue("@IDAttached", IDAttached);
+                    oCommand.Parameters.AddWithValue("@IDAttached", 0);
+                    //========================================================================================
                     oCommand.Parameters.AddWithValue("@AgeRange", AgeRange);
                     oCommand.Parameters.AddWithValue("@QuestionBankID", questionBank);
                     oCommand.Parameters.AddWithValue("@ProfessionallyRegisteredID", professioonallyRegistered);
@@ -4154,7 +4206,7 @@ namespace eRecruitment.BusinessDomain.DAL
         {
             var p = new List<GenderModel>();
             _db = new eRecruitmentDataClassesDataContext();
-            var Gender = _db.lutGenders.Where(x => x.GenderID != -1).ToList();
+            var Gender = _db.lutGenders.Where(x => x.GenderID != -1).OrderBy(x => x.Gender).ToList();
 
             foreach (var d in Gender)
             {
@@ -4173,7 +4225,7 @@ namespace eRecruitment.BusinessDomain.DAL
             _db = new eRecruitmentDataClassesDataContext();
 
             //============Peter 20221028============
-            var Race = _db.lutRaces.Where(x => x.RaceID != -1).OrderBy(x=> x.RaceName).ToList();
+            var Race = _db.lutRaces.Where(x => x.RaceID != -1).OrderBy(x => x.RaceName).ToList();
             //======================================
             //var Race = _db.lutRaces.Where(x => x.RaceID != -1).ToList();
 
@@ -4615,6 +4667,33 @@ namespace eRecruitment.BusinessDomain.DAL
             return p;
         }
 
+        //=============================Peter 202020414==========================
+        public List<JobJobSpecificQuestionModel> GetJobSpecificQuestionsList(int ID)
+        {
+            var p = new List<JobJobSpecificQuestionModel>();
+            _db = new eRecruitmentDataClassesDataContext();
+
+            var data = (from a in _db.lutJobSpecificQuestions
+                        where a.VacancyID == ID
+                        select new
+                        {
+                            JobSpecificeQuestionID = a.JobSpecificeQuestionID,
+                            VacancyID = a.VacancyID,
+                            jobSpecificQuestion = a.JobSpecificeQuestionDesc
+                        });
+
+            foreach (var d in data)
+            {
+                JobJobSpecificQuestionModel e = new JobJobSpecificQuestionModel();
+                e.JobSpecificeQuestionID = d.JobSpecificeQuestionID;
+                e.VacancyID = Convert.ToInt32(d.VacancyID);
+                e.JobSpecificeQuestionDesc = Convert.ToString(d.jobSpecificQuestion);
+                p.Add(e);
+            }
+            return p;
+        }
+        //=====================================================================
+
         //Get Get Candidate Skill List
         public List<CandidateSkillsProfileModel> GetCandidateSkillList(int ID)
         {
@@ -4877,7 +4956,7 @@ namespace eRecruitment.BusinessDomain.DAL
             foreach (var d in data)
             {
                 SalaryTypeModel e = new SalaryTypeModel();
-                e.SalaryTypeID =  Convert.ToInt32(d.SalaryTypeID);
+                e.SalaryTypeID = Convert.ToInt32(d.SalaryTypeID);
                 e.SalaryTypeDescr = Convert.ToString(d.SalaryTypeDescr);
                 p.Add(e);
             }

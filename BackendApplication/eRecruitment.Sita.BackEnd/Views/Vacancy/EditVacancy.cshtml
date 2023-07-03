@@ -79,8 +79,12 @@
                                         <div class="col-md-12">
                                             <label>BPS Vacancy Number:<span class="required" style="color:red;"> * </span></label>
                                             @Html.Hidden("myBPSVacancyNo", Url.Action("checkVacancyBPSNumber"))
+<<<<<<< HEAD
                                         <input type="hidden" value="EditVacancy" id="myBPSVacancyNoHidden" />
                                             
+=======
+                                            <input type="hidden" value="EditVacancy" id="myBPSVacancyNoHidden" />
+>>>>>>> 0cd793ff04401f3e2573804f37f753c1a4d4b722
                                             @Html.TextAreaFor(Model => @item.BPSVacancyNo, new { @id = "BPSVacancyNo", @class = "form-control", placeholder = "XXX99999,XXX88888", tabindex = 10 })
 
                                         </div>
@@ -805,7 +809,10 @@
 
                                     <div class="clearfix"></div><br />
                                     <div class="col-md-12 pull-right">
-                                        <input type="submit" onclick="customValidation(event)" class="btn btn-success" value="Save" /> |
+                                        <input type="submit" onclick="customValidation(event)" class="btn btn-success" value="Save" /> | 
+                                        <a href="@Url.Action("JobSpecQuestionList", "Vacancy",  Session["sessVacancyID"])" type="button" class="btn btn-warning">
+                                            Edit Job Specific Question(s)
+                                        </a> |
                                         <a href="@Url.Action("VacancyList", "Vacancy")" onclick="return confirm('Are you sure you want to cancel?')" type="button" class="btn btn-danger">
                                             Cancel
                                         </a>

@@ -609,10 +609,10 @@
         <elementListCompartment Id="c7656e28-a082-4ad3-9b80-dc995c59ceda" absoluteBounds="5.39, 2.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="17b65da7-45d4-4a33-98c6-6eea6a04639c" isExpanded="false" absoluteBounds="0.5, 7.25, 2, 0.45">
+    <classShape Id="5a3d84ea-109b-4290-bd90-cf40924353bf" isExpanded="false" absoluteBounds="0.5, 7.125, 2, 0.45">
       <DataClassMoniker Name="/eRecruitmentDataClassesDataContext/lutJobSpecificQuestion" />
       <nestedChildShapes>
-        <elementListCompartment Id="dd063c44-9a28-48d2-8562-99c8b7ef50d5" absoluteBounds="0.51500000000000012, 7.71, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="49b59957-b20c-42f0-b7b6-422c6e976dfb" absoluteBounds="0.51500000000000012, 7.585, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="8499b7b2-d95b-4da1-8621-3887d0c30f72" isExpanded="false" absoluteBounds="7.75, 5.5, 2.125, 0.45">

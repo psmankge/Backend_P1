@@ -690,7 +690,7 @@ tabindex = 10
                             </div>
 
                             @*====================Peter 20221206 - Add Job Specific Questions====================*@
-                            <div class="col-md-12">
+                            @*<div class="col-md-12">
                                 <div class="box box-warning">
                                     <div class="box-header with-border">
                                         <h3 class="box-title">Job Specific Questions<span style="color:red;"> * </span></h3>
@@ -713,7 +713,7 @@ tabindex = 10
                                 <div class="form-group">
                                     <input type="submit" onclick="customValidation(event)" name="button" value="Add" class="btn btn-info btn-sm" />
                                 </div>
-                            </div>
+                            </div>*@
 
                             @*==================================================================================*@
                             @*==================================================================================*@
@@ -797,8 +797,8 @@ tabindex = 10
             document.getElementById("DepartmentID").onchange();
         }
         /*==========Peter added the following function======*/
-        $("#divJobSpecQuestion").hide();
-        $("#divBtnAddQuestion").hide();
+        //$("#divJobSpecQuestion").hide();
+        //$("#divBtnAddQuestion").hide();
         /*===================================================*/
     });
 
@@ -836,36 +836,36 @@ tabindex = 10
 
 
     /*==========Peter added the following function======*/
-    function DisplayJobDescTxtbox() {
-        $("#divJobSpecQuestion").show();
-        $("#divBtnAddQuestion").show();
-    }
+    //function DisplayJobDescTxtbox() {
+    //    $("#divJobSpecQuestion").show();
+    //    $("#divBtnAddQuestion").show();
+    //}
     /*===================================================*/
 
 
     //======================Peter 20230125================================
-    function InsertJobSpecificData() {
-        var JobJobSpecificQuestionModel = {
-            JobTitleID: $("10").val(),
-            JobSpecificeQuestionDesc: $("#JobSpecQuestions").val(),
-            //CreatedDate: $("").val(),
-            //CreatedBy: $("").val(),
-        }
-        $.ajax({
-            async: true,
-            type: 'POST',
-            url: baseUrl,
-            data: JSON.stringify(JobJobSpecificQuestionModel),
-            dataType: 'JSON',
-            contentType: 'application/json; charset=utf-8',
-            success: function (data) {
+    //function InsertJobSpecificData() {
+    //    var JobJobSpecificQuestionModel = {
+    //        JobTitleID: $("10").val(),
+    //        JobSpecificeQuestionDesc: $("#JobSpecQuestions").val(),
+    //        //CreatedDate: $("").val(),
+    //        //CreatedBy: $("").val(),
+    //    }
+    //    $.ajax({
+    //        async: true,
+    //        type: 'POST',
+    //        url: baseUrl,
+    //        data: JSON.stringify(JobJobSpecificQuestionModel),
+    //        dataType: 'JSON',
+    //        contentType: 'application/json; charset=utf-8',
+    //        success: function (data) {
                 
-            },
-            error: function () {
-                alert('There is some problem to add the job specific question.');
-            }
-        })
-    }
+    //        },
+    //        error: function () {
+    //            alert('There is some problem to add the job specific question.');
+    //        }
+    //    })
+    //}
     //====================================================================
 
 

@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="eRecruitmentDb" Class="eRecruitmentDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=MERA00411;Initial Catalog=eRecruitmentDB;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="DefaultConnection" Provider="System.Data.SqlClient" />
+=======
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="eRecruitmentDB" Class="eRecruitmentDataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=MERA00412\MSSQLSERVER_D;Initial Catalog=eRecruitmentDB;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="eRecruitmentDBConnectionString" Provider="System.Data.SqlClient" />
+>>>>>>> 0cd793ff04401f3e2573804f37f753c1a4d4b722
   <Table Name="dbo.[__MigrationHistory]" Member="__MigrationHistories">
     <Type Name="__MigrationHistory">
       <Column Name="MigrationId" Type="System.String" DbType="NVarChar(150) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -1054,7 +1059,7 @@
   <Table Name="dbo.lutJobSpecificQuestion" Member="lutJobSpecificQuestions">
     <Type Name="lutJobSpecificQuestion">
       <Column Name="JobSpecificeQuestionID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="JobTitleID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VacancyID" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="JobSpecificeQuestionDesc" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="CreatedDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="CreatedBy" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
@@ -2104,13 +2109,31 @@
       <Column Name="StatusID" Type="System.Int32" DbType="Int" CanBeNull="true" />
     </ElementType>
   </Function>
+<<<<<<< HEAD
   <Function Name="dbo.proc_eRecruitmentInsertUpdateLutJobSpecificQuestion" Method="proc_eRecruitmentInsertUpdateLutJobSpecificQuestion" IsComposable="true">
     <Parameter Name="JobTitleID" Parameter="jobTitleID" Type="System.Int32" DbType="Int" />
+=======
+  <Function Name="dbo.proc_eRecruitmentUpdateJobSpecificeQuestion" Method="proc_eRecruitmentUpdateJobSpecificeQuestion">
+    <Parameter Name="JobSpecificeQuestionID" Parameter="jobSpecificeQuestionID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="JobSpecificeQuestionDesc" Parameter="jobSpecificeQuestionDesc" Type="System.String" DbType="VarChar(500)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.proc_eRecruitmentDeleteJobSpecificQuestion" Method="proc_eRecruitmentDeleteJobSpecificQuestion">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.proc_eRecruitmentInsertUpdateLutJobSpecificQuestion" Method="proc_eRecruitmentInsertUpdateLutJobSpecificQuestion">
+    <Parameter Name="VacancyID" Parameter="vacancyID" Type="System.Int32" DbType="Int" />
+>>>>>>> 0cd793ff04401f3e2573804f37f753c1a4d4b722
     <Parameter Name="JobSpecificeQuestionDesc" Parameter="jobSpecificeQuestionDesc" Type="System.String" DbType="VarChar(500)" />
     <Parameter Name="CreatedDate" Parameter="createdDate" Type="System.DateTime" DbType="DateTime" />
     <Parameter Name="CreatedBy" Parameter="createdBy" Type="System.String" DbType="VarChar(50)" />
     <Parameter Name="ModifyDate" Parameter="modifyDate" Type="System.DateTime" DbType="DateTime" />
     <Parameter Name="ModifiedBy" Parameter="modifiedBy" Type="System.String" DbType="VarChar(50)" />
+<<<<<<< HEAD
     <Return Type="object" />
+=======
+    <Return Type="System.Int32" />
+>>>>>>> 0cd793ff04401f3e2573804f37f753c1a4d4b722
   </Function>
 </Database>

@@ -1346,10 +1346,8 @@ function customValidation(event) {
     //================Peter 20221024=======================
     var location = $("#LocationID").val();
     //=====================================================
-    //================Peter 20230119=======================
-    var JobSepecificQuest = $("#JobSpecQuestions").val();
-    //=====================================================
     
+<<<<<<< HEAD
     
     if ($("#myBPSVacancyNoHidden").val() == "EditVacancy" || $("#ReAdvertiseVacancy").val() == "ReAdvertiseVacancy") {
 
@@ -1362,6 +1360,13 @@ function customValidation(event) {
     //    validateBPSNumber = false;
     //}
     
+=======
+    if ($("#myBPSVacancyNoHidden").val() === "EditVacancy") {
+
+        validateBPSNumber = false;
+    }
+
+>>>>>>> 0cd793ff04401f3e2573804f37f753c1a4d4b722
     if (validateBPSNumber) {
         // prevent the form submit
         event.preventDefault();
@@ -1547,13 +1552,7 @@ function customValidation(event) {
         $("#Location").focus();
     }
     //========================================================================================================================
-    //==================================================Peter - 20230119=====================================================
-    else if ($("#JobSpecQuestions").val() !== "") {
-        event.preventDefault();//prevent the form submit
-        //mymodal.find('.modal-body').text('yessss');
-        //mymodal.modal('show');
-    }
-    //========================================================================================================================
+
     else {
 
         document.forms["AddVacanyForm"].submit();
